@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PLAYful</string>
-
+    <string name="activity_permissions_header_text">Permissions Needed</string>
+    <string name="activity_permissions_description">The following permissions are needed by the app in order to proceed. See the description for each permission below</string>
+    <string name="activity_permissions_footer_text">Permissions are necessary for the application to function</string>
+    <string name="storage_permission_header_text">Storage Permission</string>
+    <string name="storage_permission_description">This permission is needed in order to show songs from your storage, Click on it to allow</string>
 </resources>
