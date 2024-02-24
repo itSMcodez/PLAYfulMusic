@@ -6,4 +6,6 @@
     <string name="activity_permissions_footer_text">Permissions are necessary for the application to function</string>
     <string name="storage_permission_header_text">Storage Permission</string>
     <string name="storage_permission_description">This permission is needed in order to show songs from your storage, Click on it to allow</string>
+    <string name="activity_main_action_bar_title">PLAYful</string>
+    <string name="activity_main_action_bar_subtitle">Music Player</string>
 </resources>
