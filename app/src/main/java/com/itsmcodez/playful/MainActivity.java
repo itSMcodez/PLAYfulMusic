@@ -24,4 +24,11 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         this.binding = null;
     }
+    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
+    
 }
