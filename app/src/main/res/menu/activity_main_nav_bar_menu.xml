@@ -2,15 +2,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/music_menu_item"
-        android:name="Music"
-        android:title="Music"
-        android:icon="@drawable/ic_music" />
+        android:id="@+id/songs_menu_item"
+        android:name="Songs"
+        android:title="Songs"
+        android:icon="@drawable/ic_music_note_outline"
+        android:tooltipText="Songs" />
+    
+    <item
+        android:id="@+id/albums_menu_item"
+        android:name="Albums"
+        android:title="Albums"
+        android:icon="@drawable/ic_album_outline"
+        android:tooltipText="Albums" />
+    
+    <item
+        android:id="@+id/artists_menu_item"
+        android:name="Artists"
+        android:title="Artists"
+        android:icon="@drawable/ic_artist_outline"
+        android:tooltipText="Artists" />
+    
+    <item
+        android:id="@+id/playlists_menu_item"
+        android:name="Playlists"
+        android:title="Playlists"
+        android:icon="@drawable/ic_playlist_music_outline"
+        android:tooltipText="Playlists" />
     
     <item
         android:id="@+id/settings_menu_item"
         android:name="Settings"
         android:title="Settings"
-        android:icon="@drawable/ic_settings" />
+        android:icon="@drawable/ic_settings"
+        android:tooltipText="Settings" />
 
 </menu>
