@@ -1,20 +1,35 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/build.gradle",
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/layout/activity_main.xml",
       "selection": {
         "end": {
-          "column": 32,
-          "index": 1503,
-          "line": 61
+          "column": 0,
+          "index": 0,
+          "line": 0
         },
         "start": {
-          "column": 32,
-          "index": 1503,
-          "line": 61
+          "column": 0,
+          "index": 0,
+          "line": 0
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/layout/song_item_view.xml",
+      "selection": {
+        "end": {
+          "column": 37,
+          "index": 1619,
+          "line": 41
+        },
+        "start": {
+          "column": 37,
+          "index": 1619,
+          "line": 41
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/build.gradle"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/layout/song_item_view.xml"
 }
