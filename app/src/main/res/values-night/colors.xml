@@ -4,6 +4,7 @@
     <color name="colorPrimary">#64B5F6</color>
     <color name="colorPrimaryDark">#64B5F6</color>
     <color name="colorAccent">#21C063</color>
+    <color name="colorMiniControllerBg">#DD212730</color>
     <color name="blue_grey_600">#546E7A</color>
     <color name="grey_3">#f7f7f7</color>
     <color name="grey_5">#f2f2f2</color>

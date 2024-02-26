@@ -13,16 +13,100 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_height="?attr/actionBarSize"
             android:layout_width="match_parent"
-            android:id="@+id/toolbar"/>
+            android:id="@+id/toolbar"
+            app:subtitleTextColor="@color/colorPrimary"/>
         
     </com.google.android.material.appbar.AppBarLayout>
     
-    <FrameLayout
-        android:id="@+id/fragment_holder"
-        android:layout_height="wrap_content"
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/appbar"
-        android:layout_above="@id/bottom_nav_bar"/>
+        android:layout_above="@id/bottom_nav_bar">
+        
+        <FrameLayout
+        android:id="@+id/fragment_holder"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+        
+        <androidx.cardview.widget.CardView
+            android:id="@+id/mini_controller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:layout_alignParentBottom="true"
+            app:cardBackgroundColor="@color/colorMiniControllerBg"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="0dp">
+            
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+                
+                <ImageView
+                    android:id="@+id/album_artwork"
+                    android:layout_height="48dp"
+                    android:layout_width="48dp"
+                    android:src="@drawable/ic_music_note"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"/>
+                
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toEndOf="@id/album_artwork"
+                    android:layout_toStartOf="@id/skip_next"
+                    android:layout_centerVertical="true">
+                    
+                    <TextView
+                        android:id="@+id/song_title"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:text="Song title"/>
+                    
+                    <TextView
+                        android:id="@+id/song_artist"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textSize="14sp"
+                        android:text="Song artist"/>
+                    
+                </LinearLayout>
+                
+                <ImageView
+                    android:id="@+id/skip_next"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_skip_next_outline"
+                    android:layout_toStartOf="@id/play_pause"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"/>
+                
+                <ImageView
+                    android:id="@+id/play_pause"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_play_outline"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"/>
+                
+            </RelativeLayout>
+            
+        </androidx.cardview.widget.CardView>
+        
+    </RelativeLayout>
     
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_bar"
