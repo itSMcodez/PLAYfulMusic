@@ -4,7 +4,6 @@ import android.view.ViewGroup;
 import android.os.Bundle;
 import android.view.View;
 import androidx.fragment.app.Fragment;
-import com.itsmcodez.playful.databinding.FragmentMusicBinding;
 import com.itsmcodez.playful.databinding.FragmentSettingsBinding;
 
 public class SettingsFragment extends Fragment {
