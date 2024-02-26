@@ -8,4 +8,5 @@
     <string name="storage_permission_description">This permission is needed in order to show songs from your storage, Click on it to allow</string>
     <string name="activity_main_action_bar_title">PLAYful</string>
     <string name="activity_main_action_bar_subtitle">Music Player</string>
+    <string name="no_songs_text">No songs were found!</string>
 </resources>
