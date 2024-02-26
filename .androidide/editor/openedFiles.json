@@ -1,0 +1,20 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/build.gradle",
+      "selection": {
+        "end": {
+          "column": 32,
+          "index": 1503,
+          "line": 61
+        },
+        "start": {
+          "column": 32,
+          "index": 1503,
+          "line": 61
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/build.gradle"
+}
