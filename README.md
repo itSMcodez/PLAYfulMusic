@@ -2,12 +2,12 @@
 PLAYful is a fully functional music player built on AndroidIDE, (an awesome android IDE used to create android apps right on your phone!😊). This project is open source and I need contributers like you to contribute to this project to make it an awesome one 😜!
 
 # Features
-- [ x ] Library management and organisation
+- [x] Library management and organisation
 - [ ] Offline music player
 - [ ] full customization (themes,fonts,etc)
 - [ ] Playlist management
-- [ x ] Multiple audio format support
-- [ x ] Metadata display and editor
+- [x] Multiple audio format support
+- [x] Metadata display and editor
 - [ ] Background music streaming
 - [ ] Online music download
 - [ ] Online music streaming
