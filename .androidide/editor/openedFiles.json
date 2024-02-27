@@ -1,0 +1,20 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/PermissionsActivity.java",
+      "selection": {
+        "end": {
+          "column": 9,
+          "index": 884,
+          "line": 22
+        },
+        "start": {
+          "column": 9,
+          "index": 884,
+          "line": 22
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/PermissionsActivity.java"
+}
