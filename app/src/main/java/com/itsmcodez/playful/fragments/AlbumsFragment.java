@@ -42,10 +42,14 @@ public class AlbumsFragment extends Fragment {
                         new Observer<ArrayList<AlbumsModel>>() {
                             @Override
                             public void onChanged(ArrayList<AlbumsModel> allAlbums) {
-                    
+                            
                                 albumsAdapter = new AlbumsAdapter(container.getContext(), inflater, allAlbums);
                                 binding.recyclerView.setAdapter(albumsAdapter);
                     
+                                if(binding.recyclerView.getAdapter().getItemCount() == 0){
+                                    binding.recyclerView.setVisibility(View.GONE);
+                                    binding.noSongsText.setVisibility(View.VISIBLE);
+                                }
                             }
                         });
 

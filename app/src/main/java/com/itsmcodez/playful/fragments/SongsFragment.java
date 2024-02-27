@@ -48,6 +48,10 @@ public class SongsFragment extends Fragment {
                                 songsAdapter = new SongsAdapter(container.getContext(), inflater, allSongs);
                                 binding.recyclerView.setAdapter(songsAdapter);
                     
+                                if(binding.recyclerView.getAdapter().getItemCount() == 0){
+                                    binding.recyclerView.setVisibility(View.GONE);
+                                    binding.noSongsText.setVisibility(View.VISIBLE);
+                                }
                             }
                         });
 
