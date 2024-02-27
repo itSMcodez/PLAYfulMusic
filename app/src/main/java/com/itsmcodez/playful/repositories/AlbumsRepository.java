@@ -8,6 +8,8 @@ import com.itsmcodez.playful.models.SongsModel;
 import androidx.lifecycle.MutableLiveData;
 import com.itsmcodez.playful.models.AlbumsModel;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.LinkedHashSet;
 
 public class AlbumsRepository {
     private static AlbumsRepository instance;
@@ -18,7 +20,9 @@ public class AlbumsRepository {
     public AlbumsRepository(){
         
         // initialize albums
-        albums = new ArrayList<>();
+        //albums = new ArrayList<>();
+        
+        ArrayList<AlbumsModel> base = new ArrayList<>();
         
         Uri albumsUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         
@@ -39,15 +43,41 @@ public class AlbumsRepository {
                 Uri albumPath = Uri.parse("content://media/external/audio/albumart");
                 Uri albumArtwork = ContentUris.withAppendedId(albumPath, Integer.parseInt(albumId));
                 
-                albums.add(new AlbumsModel(album, albumId, albumArtwork));
+                base.add(new AlbumsModel(album, albumId, albumArtwork));
                 
             } while(cursor.moveToNext());
             cursor.close();
             
             // assign allAlbums to albums
+            albums = removeDuplicates(base);
             allAlbums = new MutableLiveData<>(albums);
         }
     }
+    
+    public static ArrayList<AlbumsModel> removeDuplicates(ArrayList<AlbumsModel> albums) {
+        ArrayList<AlbumsModel> filteredList = new ArrayList<>();
+        
+        // filter
+        ArrayList<String> duplicate = new ArrayList<>();
+        for(AlbumsModel album : albums){
+            
+            if(duplicate.size() == 0){
+                duplicate.add(album.getAlbum());
+            }
+            else{
+                if(duplicate.contains(album.getAlbum())){
+                    duplicate.add(album.getAlbum());
+                }
+                else{
+                    filteredList.add(album);
+                    duplicate.add(album.getAlbum());
+                }
+            }
+            
+        }
+
+        return filteredList;
+    } 
     
     public static synchronized AlbumsRepository getInstance(Application application){
         AlbumsRepository.application = application;

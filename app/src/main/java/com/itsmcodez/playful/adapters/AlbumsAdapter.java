@@ -59,7 +59,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
         // artwork
         viewHolder.albumArtwork.setImageURI(album.getAlbumArtwork());
         if(viewHolder.albumArtwork.getDrawable() == null){
-            viewHolder.albumArtwork.setImageDrawable(context.getDrawable(R.drawable.ic_album_outline));
+            viewHolder.albumArtwork.setImageDrawable(context.getDrawable(R.drawable.ic_album));
         }
         
         viewHolder.itemView.setOnClickListener(view -> {
