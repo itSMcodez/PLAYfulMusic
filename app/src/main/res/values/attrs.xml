@@ -1,0 +1,6 @@
+<resource>
+    
+    <attr name="roundSelector" format="reference"/>
+    <attr name="rectSelector" format="reference"/>
+    
+</resource>

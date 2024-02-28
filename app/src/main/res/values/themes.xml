@@ -6,6 +6,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="roundSelector">@drawable/round_selector</item>
+        <item name="rectSelector">@drawable/rect_selector</item>
   </style>
 
   <style name="AppTheme" parent="Base.AppTheme" />

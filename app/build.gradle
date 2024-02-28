@@ -52,6 +52,14 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata:2.6.2")
     
+    // CircleImageView
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.14.2")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
+    
+    // exclude duplicate classes
     configurations.implementation {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
     }

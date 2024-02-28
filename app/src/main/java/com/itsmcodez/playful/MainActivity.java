@@ -36,8 +36,15 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.activity_main_action_bar_title);
         getSupportActionBar().setSubtitle(R.string.activity_main_action_bar_subtitle);
 
+        // Initialize fragments
+        SongsFragment songsFragment = new SongsFragment();
+        AlbumsFragment albumsFragment = new AlbumsFragment();
+        ArtistsFragment artistsFragment = new ArtistsFragment();
+        PlaylistsFragment playlistsFragment = new PlaylistsFragment();
+        SettingsFragment settingsFragment = new SettingsFragment();
+        
         // Default screen
-        replaceFragment(new SongsFragment());
+        replaceFragment(songsFragment);
         
         // BottomNavigation
         binding.bottomNavBar.setOnItemSelectedListener(
@@ -47,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem item) {
                     
                         if(item.getItemId() == R.id.songs_menu_item){
-                            replaceFragment(new SongsFragment());
+                            replaceFragment(songsFragment);
                             if(!sortMenuItem.isVisible()){
                                 sortMenuItem.setVisible(true);
                             }
@@ -57,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     
                         if(item.getItemId() == R.id.albums_menu_item){
-                            replaceFragment(new AlbumsFragment());
+                            replaceFragment(albumsFragment);
                             if(sortMenuItem.isVisible()){
                                 sortMenuItem.setVisible(false);
                             }
@@ -67,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     
                         if(item.getItemId() == R.id.artists_menu_item){
-                            replaceFragment(new ArtistsFragment());
+                            replaceFragment(artistsFragment);
                             if(sortMenuItem.isVisible()){
                                 sortMenuItem.setVisible(false);
                             }
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     
                         if(item.getItemId() == R.id.playlists_menu_item){
-                            replaceFragment(new PlaylistsFragment());
+                            replaceFragment(playlistsFragment);
                             if(sortMenuItem.isVisible()){
                                 sortMenuItem.setVisible(false);
                             }
@@ -87,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     
                         if(item.getItemId() == R.id.settings_menu_item){
-                            replaceFragment(new SettingsFragment());
+                            replaceFragment(settingsFragment);
                             if(sortMenuItem.isVisible()){
                                 sortMenuItem.setVisible(false);
                             }

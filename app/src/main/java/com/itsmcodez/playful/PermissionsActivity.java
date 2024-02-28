@@ -15,17 +15,13 @@ public class PermissionsActivity extends AppCompatActivity {
     private static final String STORAGE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE;
     
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         
         if(isPermissionChecked(STORAGE_PERMISSION)){
             this.startActivity(new Intent(this, MainActivity.class));
         }
-    }
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        
         // Bind to views
         binding = ActivityPermissionsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
