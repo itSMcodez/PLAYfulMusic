@@ -2,6 +2,7 @@ package com.itsmcodez.playful.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.cardview.widget.CardView;
@@ -17,6 +18,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<AlbumsModel> albums;
+    private OnClickEvents onClickEvents;
 
     public AlbumsAdapter(Context context, LayoutInflater inflater, ArrayList<AlbumsModel> albums) {
         this.context = context;
@@ -63,7 +65,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
         }
         
         viewHolder.itemView.setOnClickListener(view -> {
-            
+            onClickEvents.onItemClick(view, album, position);
         });
     }
 
@@ -77,5 +79,14 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
         else size = 0;
         
         return size;
+    }
+    
+    public void setOnClickEvents(OnClickEvents onClickEvents){
+        this.onClickEvents = onClickEvents;
+    }
+    
+    public interface OnClickEvents{
+        void onItemClick(View view, AlbumsModel album, int position);
+        boolean onItemLongClick(View view, AlbumsModel album, int position);
     }
 }
