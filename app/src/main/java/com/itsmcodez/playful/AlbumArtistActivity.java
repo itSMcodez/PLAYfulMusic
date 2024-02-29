@@ -89,6 +89,13 @@ public class AlbumArtistActivity extends AppCompatActivity {
                         
                                     songsAdapter = new SongsAdapter(AlbumArtistActivity.this, getLayoutInflater(), filteredSongs);
                                     binding.recyclerView.setAdapter(songsAdapter);
+                                    
+                                    if(binding.recyclerView.getAdapter().getItemCount() == 1){
+                                        binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Song • " + "00:00" );
+                                    }
+                                    else{
+                                        binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Songs • " + "00:00" );
+                                    }
                                 }
                             });
         }
