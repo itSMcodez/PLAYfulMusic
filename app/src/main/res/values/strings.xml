@@ -9,4 +9,6 @@
     <string name="activity_main_action_bar_title">PLAYful</string>
     <string name="activity_main_action_bar_subtitle">Music Player</string>
     <string name="no_songs_text">No songs were found!</string>
+    <string name="play_all_bt_text">Play all</string>
+    <string name="shuffle_all_bt_text">Shuffle all</string>
 </resources>

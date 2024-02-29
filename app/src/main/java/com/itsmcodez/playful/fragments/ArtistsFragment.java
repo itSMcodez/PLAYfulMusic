@@ -1,5 +1,6 @@
 package com.itsmcodez.playful.fragments;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.itsmcodez.playful.AlbumArtistActivity;
 import com.itsmcodez.playful.adapters.ArtistsAdapter;
 import com.itsmcodez.playful.databinding.FragmentArtistsBinding;
 import com.itsmcodez.playful.models.ArtistsModel;
@@ -44,14 +46,32 @@ public class ArtistsFragment extends Fragment {
                         new Observer<ArrayList<ArtistsModel>>() {
                             @Override
                             public void onChanged(ArrayList<ArtistsModel> allArtists) {
-                                
-                                artistsAdapter = new ArtistsAdapter(container.getContext(), inflater, allArtists);
+
+                                artistsAdapter =
+                                        new ArtistsAdapter(
+                                                container.getContext(), inflater, allArtists);
                                 binding.recyclerView.setAdapter(artistsAdapter);
-                    
-                                if(binding.recyclerView.getAdapter().getItemCount() == 0){
+
+                                if (binding.recyclerView.getAdapter().getItemCount() == 0) {
                                     binding.recyclerView.setVisibility(View.GONE);
                                     binding.noSongsText.setVisibility(View.VISIBLE);
                                 }
+
+                                artistsAdapter.setOnClickEvents(
+                                        new ArtistsAdapter.OnClickEvents() {
+                                            @Override
+                                            public void onItemClick(
+                                                    View view, ArtistsModel artist, int position) {
+                                                        startActivity(new Intent(container.getContext(), AlbumArtistActivity.class)
+                                            .putExtra("displaySongs", "fromArtist").putExtra("albumId", artist.getAlbumId()).putExtra("title", artist.getArtist()));
+                                                    }
+
+                                            @Override
+                                            public boolean onItemLongClick(
+                                                    View view, ArtistsModel artist, int position) {
+                                                        return false;
+                                                    }
+                                        });
                             }
                         });
 

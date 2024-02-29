@@ -15,9 +15,8 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:expandedTitleMargin="64dp">
+            app:expandedTitleMarginStart="64dp">
             
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -29,10 +28,67 @@
 
     </com.google.android.material.appbar.AppBarLayout>
     
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
+            
+            <TextView
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:textSize="32sp"
+                 android:id="@+id/title"
+                 android:textStyle="bold"
+                 android:text="Title" />
+            
+            <TextView
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:textSize="18sp"
+                 android:id="@+id/info"
+                 android:text="Info" />
+            
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/play_all_bt"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:text="@string/play_all_bt_text"
+                app:icon="@drawable/ic_play_outline"
+                style="@style/Widget.Material3.Button.OutlinedButton"/>
+            
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/shuffle_all_bt"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:text="@string/shuffle_all_bt_text"
+                app:icon="@drawable/ic_shuffle"
+                style="@style/Widget.Material3.Button.TonalButton"/>
+            
+        </LinearLayout>
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
+        
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
