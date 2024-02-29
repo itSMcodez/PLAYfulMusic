@@ -38,5 +38,11 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name="AlbumArtistActivity"
+            android:exported="true">
+            
+        </activity>
+        
     </application>
 </manifest>
