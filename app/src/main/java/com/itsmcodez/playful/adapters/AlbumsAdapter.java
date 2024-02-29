@@ -55,7 +55,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
         AlbumsModel album = albums.get(position);
         
         // Metadata 
-        viewHolder.albumTitle.setSelected(true);
         viewHolder.albumTitle.setText(album.getAlbum());
         
         // artwork
