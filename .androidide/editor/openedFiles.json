@@ -1,0 +1,20 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/layout/activity_album_artist.xml",
+      "selection": {
+        "end": {
+          "column": 67,
+          "index": 1610,
+          "line": 35
+        },
+        "start": {
+          "column": 67,
+          "index": 1610,
+          "line": 35
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/layout/activity_album_artist.xml"
+}
