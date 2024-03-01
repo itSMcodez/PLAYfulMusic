@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.itsmcodez.playful.adapters.SongsAdapter;
 import com.itsmcodez.playful.databinding.ActivityAlbumArtistBinding;
 import com.itsmcodez.playful.models.SongsModel;
+import com.itsmcodez.playful.utils.MusicUtils;
 import com.itsmcodez.playful.viewmodels.SongsViewModel;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -45,14 +46,10 @@ public class AlbumArtistActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String title = intent.getStringExtra("title");
+            String albumId = intent.getStringExtra("albumId");
             
             // Album artwork
-            ImageView album = new ImageView(AlbumArtistActivity.this);
-            Uri albumPath = Uri.parse("content://media/external/audio/albumart");
-            Uri albumArtwork = ContentUris.withAppendedId(albumPath, Integer.parseInt(intent.getStringExtra("albumId")));
-            album.setImageURI(albumArtwork);
-            Drawable albumDrawable = album.getDrawable();
-            binding.collapsingToolbar.setBackground(albumDrawable);
+            binding.collapsingToolbar.setBackground(MusicUtils.getAlbumArtworkDrawable(AlbumArtistActivity.this, albumId));
             binding.collapsingToolbar.setTitle(title);
             
             // Metadata
@@ -100,31 +97,13 @@ public class AlbumArtistActivity extends AppCompatActivity {
                                     binding.recyclerView.setAdapter(songsAdapter);
                                     
                                     if(binding.recyclerView.getAdapter().getItemCount() == 1){
-                                        binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Song • " + getFormattedTime(duration) );
+                                        binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Song • " + MusicUtils.getFormattedTime(duration) );
                                     }
                                     else{
-                                        binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Songs • " + getFormattedTime(duration) );
+                                        binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Songs • " + MusicUtils.getFormattedTime(duration) );
                                     }
                                 }
                             });
         }
-    }
-    
-    public String getFormattedTime(long duration){
-        
-        String songTime = "";
-        var toMin = duration / 1000 / 60;
-        var toSec = duration / 1000 % 60;
-        
-        if(toMin < 60){
-            songTime = String.format(Locale.getDefault(), "%02d:%02d", toMin, toSec);
-        }
-        else{
-            var toHr = toMin / 60;
-            toMin %= 60;
-            songTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", toHr, toMin, toSec);
-        }
-        
-        return songTime;
     }
 }

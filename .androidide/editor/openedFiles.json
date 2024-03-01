@@ -1,0 +1,50 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/utils/MusicUtils.java",
+      "selection": {
+        "end": {
+          "column": 5,
+          "index": 1474,
+          "line": 42
+        },
+        "start": {
+          "column": 5,
+          "index": 1474,
+          "line": 42
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/AlbumArtistActivity.java",
+      "selection": {
+        "end": {
+          "column": 123,
+          "index": 2020,
+          "line": 51
+        },
+        "start": {
+          "column": 123,
+          "index": 2020,
+          "line": 51
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/repositories/SongsRepository.java",
+      "selection": {
+        "end": {
+          "column": 100,
+          "index": 1907,
+          "line": 43
+        },
+        "start": {
+          "column": 16,
+          "index": 1737,
+          "line": 42
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/utils/MusicUtils.java"
+}
