@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.itsmcodez.playful.models.SongsModel;
 import java.util.Locale;
 
-public class MusicUtils {
+public final class MusicUtils {
     public static final String TAG = "MusicUtils";
     public static final String ARGS = "com.itsmcodez.playful." + TAG;
     

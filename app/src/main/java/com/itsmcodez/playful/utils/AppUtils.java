@@ -2,7 +2,7 @@ package com.itsmcodez.playful.utils;
 import android.util.Log;
 import java.util.ArrayList;
 
-public class AppUtils {
+public final class AppUtils {
     public static final String TAG = "AppUtils";
     private static ArrayList<String> registrars = new ArrayList<>();
     
