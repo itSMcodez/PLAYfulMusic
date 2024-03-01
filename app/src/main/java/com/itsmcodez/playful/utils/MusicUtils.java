@@ -14,6 +14,12 @@ public class MusicUtils {
     public static final String TAG = "MusicUtils";
     public static final String ARGS = "com.itsmcodez.playful." + TAG;
     
+    static{
+        AppUtils.addRegistrar(MusicUtils.getRegistrar());
+    }
+    
+    public MusicUtils(){}
+    
     public static String getFormattedTime(long duration){
         
         String songTime = "";
@@ -28,7 +34,7 @@ public class MusicUtils {
             toMin %= 60;
             songTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", toHr, toMin, toSec);
         }
-        
+        getRegistrar();
         return songTime;
     }
     
@@ -38,7 +44,7 @@ public class MusicUtils {
         ImageView album = new ImageView(context);
         album.setImageURI(albumArtwork);
         Drawable albumDrawable = album.getDrawable();
-        
+        getRegistrar();
         return albumDrawable;
     }
     
