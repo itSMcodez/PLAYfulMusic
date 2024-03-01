@@ -16,6 +16,7 @@ import com.itsmcodez.playful.databinding.ActivityAlbumArtistBinding;
 import com.itsmcodez.playful.models.SongsModel;
 import com.itsmcodez.playful.viewmodels.SongsViewModel;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AlbumArtistActivity extends AppCompatActivity {
     private ActivityAlbumArtistBinding binding;
@@ -66,6 +67,10 @@ public class AlbumArtistActivity extends AppCompatActivity {
                                 @Override
                                 public void onChanged(ArrayList<SongsModel> allSongs) {
                                     
+                                    // allSongs duration
+                                    var sum = 0;
+                                    var duration = 0;
+                        
                                     // Filter
                                     ArrayList<SongsModel> filteredSongs = new ArrayList<>();
                         
@@ -74,6 +79,8 @@ public class AlbumArtistActivity extends AppCompatActivity {
                                         for(SongsModel song : allSongs){
                                             if(song.getAlbum().equals(title)){
                                                 filteredSongs.add(song);
+                                                duration = sum + Integer.parseInt(song.getDuration());
+                                                sum = sum + Integer.parseInt(song.getDuration());
                                             }
                                         }
                                     }
@@ -82,6 +89,8 @@ public class AlbumArtistActivity extends AppCompatActivity {
                                         for(SongsModel song : allSongs){
                                             if(song.getArtist().equals(title)){
                                                 filteredSongs.add(song);
+                                                duration = sum + Integer.parseInt(song.getDuration());
+                                                sum = sum + Integer.parseInt(song.getDuration());
                                             }
                                         }
                                     }
@@ -91,13 +100,31 @@ public class AlbumArtistActivity extends AppCompatActivity {
                                     binding.recyclerView.setAdapter(songsAdapter);
                                     
                                     if(binding.recyclerView.getAdapter().getItemCount() == 1){
-                                        binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Song • " + "00:00" );
+                                        binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Song • " + getFormattedTime(duration) );
                                     }
                                     else{
-                                        binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Songs • " + "00:00" );
+                                        binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Songs • " + getFormattedTime(duration) );
                                     }
                                 }
                             });
         }
+    }
+    
+    public String getFormattedTime(long duration){
+        
+        String songTime = "";
+        var toMin = duration / 1000 / 60;
+        var toSec = duration / 1000 % 60;
+        
+        if(toMin < 60){
+            songTime = String.format(Locale.getDefault(), "%02d:%02d", toMin, toSec);
+        }
+        else{
+            var toHr = toMin / 60;
+            toMin %= 60;
+            songTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", toHr, toMin, toSec);
+        }
+        
+        return songTime;
     }
 }
