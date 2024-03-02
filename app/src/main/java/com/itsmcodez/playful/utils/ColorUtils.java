@@ -7,47 +7,77 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.util.Log;
+import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
 import androidx.palette.graphics.Palette;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ColorUtils {
     public static final String TAG = "ColorUtils";
     public static final String ARGS = "com.itsmcodez.playful." + TAG;
     private static Palette extractedColorsPalette;
-    
-    static{
+
+    static {
         AppUtils.addRegistrar(ColorUtils.getRegistrar());
     }
-    
-    public static Palette extractColorsFromImage(String path){
-        MediaMetadataRetriever imageRetriever = new MediaMetadataRetriever();
-        imageRetriever.setDataSource(path);
-        byte[] imgBytes = imageRetriever.getEmbeddedPicture();
-        try{
-            imageRetriever.release();
-        }catch(Exception e){e.printStackTrace();}
+
+    @Nullable
+    public static Palette generatePalette(Bitmap bitmap) {
+        getRegistrar();
         
-        Bitmap albumBitmap = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
+        if (bitmap == null) return null;
         
-        ColorUtils.extractedColorsPalette = Palette.from(albumBitmap).generate();
+        return Palette.from(bitmap).generate();
+    }
+
+    @ColorInt
+    public static int getColor(@Nullable Palette palette, int fallback) {
+        if (palette != null) {
+            if (palette.getVibrantSwatch() != null) {
+                return palette.getVibrantSwatch().getRgb();
+            } else if (palette.getMutedSwatch() != null) {
+                return palette.getMutedSwatch().getRgb();
+            } else if (palette.getDarkVibrantSwatch() != null) {
+                return palette.getDarkVibrantSwatch().getRgb();
+            } else if (palette.getDarkMutedSwatch() != null) {
+                return palette.getDarkMutedSwatch().getRgb();
+            } else if (palette.getLightVibrantSwatch() != null) {
+                return palette.getLightVibrantSwatch().getRgb();
+            } else if (palette.getLightMutedSwatch() != null) {
+                return palette.getLightMutedSwatch().getRgb();
+            } else if (!palette.getSwatches().isEmpty()) {
+                return Collections.max(palette.getSwatches(), SwatchComparator.getInstance())
+                        .getRgb();
+            }
+        }
         
         getRegistrar();
         
-        return ColorUtils.extractedColorsPalette;
+        return fallback;
     }
-    
-    public static Palette extractColorsFromImage(Context context, String albumId){
-        Drawable albumDrawable = MusicUtils.getAlbumArtworkDrawable(context, albumId);
-        BitmapDrawable albumBitmapDrawable = (BitmapDrawable) albumDrawable;
-        Bitmap albumBitmap = albumBitmapDrawable.getBitmap();
-        
-        ColorUtils.extractedColorsPalette = Palette.from(albumBitmap).generate();
-        
-        getRegistrar();
-        
-        return ColorUtils.extractedColorsPalette;
+
+    private static class SwatchComparator implements Comparator<Palette.Swatch> {
+        private static SwatchComparator instance;
+
+        public static SwatchComparator getInstance() {
+            if (instance == null) {
+                instance = new SwatchComparator();
+            }
+            
+            getRegistrar();
+            
+            return instance;
+        }
+
+        @Override
+        public int compare(Palette.Swatch lhs, Palette.Swatch rhs) {
+            getRegistrar();
+            return lhs.getPopulation() - rhs.getPopulation();
+        }
     }
-    
-    public static String getRegistrar(){
+
+    public static String getRegistrar() {
         Log.i(TAG, "Accessing registrar...");
         return ColorUtils.ARGS;
     }
