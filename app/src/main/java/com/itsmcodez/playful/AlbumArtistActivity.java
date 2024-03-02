@@ -2,6 +2,10 @@ package com.itsmcodez.playful;
 
 import android.content.ContentUris;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.itsmcodez.playful.adapters.SongsAdapter;
 import com.itsmcodez.playful.databinding.ActivityAlbumArtistBinding;
 import com.itsmcodez.playful.models.SongsModel;
+import com.itsmcodez.playful.utils.ColorUtils;
 import com.itsmcodez.playful.utils.MusicUtils;
 import com.itsmcodez.playful.viewmodels.SongsViewModel;
 import java.util.ArrayList;
@@ -47,6 +52,24 @@ public class AlbumArtistActivity extends AppCompatActivity {
         if (intent != null) {
             String title = intent.getStringExtra("title");
             String albumId = intent.getStringExtra("albumId");
+            
+            // Extract colors from album artwork 
+            Drawable drawable = MusicUtils.getAlbumArtworkDrawable(AlbumArtistActivity.this, albumId);
+            ImageView albumImage = new ImageView(AlbumArtistActivity.this);
+            albumImage.setImageDrawable(drawable);
+            if(albumImage.getDrawable() == null) albumImage.setImageDrawable(getDrawable(R.drawable.ic_album));
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) albumImage.getDrawable();
+            Bitmap albumBitmap = bitmapDrawable.getBitmap();
+            int color = ColorUtils.getColor(ColorUtils.generatePalette(albumBitmap), 0x000000);
+            
+            // Design
+            ColorStateList colorIn = ColorStateList.valueOf(color);
+            binding.collapsingToolbar.setExpandedTitleColor(color);
+            binding.playAllBt.setIconTint(colorIn);
+            binding.playAllBt.setIconTintMode(PorterDuff.Mode.SRC_IN);
+            binding.playAllBt.setStrokeColor(colorIn);
+            binding.playAllBt.setTextColor(color);
+            binding.shuffleAllBt.setBackgroundColor(color);
             
             // Album artwork
             binding.collapsingToolbar.setBackground(MusicUtils.getAlbumArtworkDrawable(AlbumArtistActivity.this, albumId));
