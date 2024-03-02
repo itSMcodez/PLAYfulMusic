@@ -1,0 +1,20 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/AlbumArtistActivity.java",
+      "selection": {
+        "end": {
+          "column": 80,
+          "index": 3892,
+          "line": 88
+        },
+        "start": {
+          "column": 80,
+          "index": 3892,
+          "line": 88
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/AlbumArtistActivity.java"
+}

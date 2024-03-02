@@ -4,9 +4,13 @@ import android.content.ContentUris;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -54,13 +58,20 @@ public class AlbumArtistActivity extends AppCompatActivity {
             String albumId = intent.getStringExtra("albumId");
             
             // Extract colors from album artwork 
+            int color = Color.parseColor("#ff64b5f6");
+            BitmapDrawable bitmapDrawable;
+            Bitmap albumBitmap;
             Drawable drawable = MusicUtils.getAlbumArtworkDrawable(AlbumArtistActivity.this, albumId);
             ImageView albumImage = new ImageView(AlbumArtistActivity.this);
             albumImage.setImageDrawable(drawable);
-            if(albumImage.getDrawable() == null) albumImage.setImageDrawable(getDrawable(R.drawable.ic_album));
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) albumImage.getDrawable();
-            Bitmap albumBitmap = bitmapDrawable.getBitmap();
-            int color = ColorUtils.getColor(ColorUtils.generatePalette(albumBitmap), 0x000000);
+            if(albumImage.getDrawable() == null){
+                albumImage.setImageDrawable(getDrawable(R.drawable.ic_music));
+            }
+            if( !( albumImage.getDrawable() instanceof VectorDrawable ) ) {
+                bitmapDrawable = (BitmapDrawable) albumImage.getDrawable();
+                albumBitmap = bitmapDrawable.getBitmap();
+                color = ColorUtils.getColor(ColorUtils.generatePalette(albumBitmap), 0xff64b5f6);
+            }
             
             // Design
             ColorStateList colorIn = ColorStateList.valueOf(color);
@@ -72,7 +83,12 @@ public class AlbumArtistActivity extends AppCompatActivity {
             binding.shuffleAllBt.setBackgroundColor(color);
             
             // Album artwork
-            binding.collapsingToolbar.setBackground(MusicUtils.getAlbumArtworkDrawable(AlbumArtistActivity.this, albumId));
+            Drawable albumArtwork = MusicUtils.getAlbumArtworkDrawable(AlbumArtistActivity.this, albumId);
+            if(albumArtwork == null) {
+                albumArtwork = getDrawable(R.drawable.ic_music);
+                albumArtwork.setColorFilter(0xff64b5f6, PorterDuff.Mode.SRC_IN);
+            }
+            binding.collapsingToolbar.setBackground(albumArtwork);
             binding.collapsingToolbar.setTitle(title);
             
             // Metadata
