@@ -20,6 +20,7 @@ public class PermissionsActivity extends AppCompatActivity {
         
         if(isPermissionChecked(STORAGE_PERMISSION)){
             this.startActivity(new Intent(this, MainActivity.class));
+            return;
         }
         
         // Bind to views

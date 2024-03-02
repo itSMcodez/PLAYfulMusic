@@ -1,20 +1,20 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/AlbumArtistActivity.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/PermissionsActivity.java",
       "selection": {
         "end": {
-          "column": 80,
-          "index": 3892,
-          "line": 88
+          "column": 35,
+          "index": 787,
+          "line": 20
         },
         "start": {
-          "column": 80,
-          "index": 3892,
-          "line": 88
+          "column": 35,
+          "index": 787,
+          "line": 20
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/AlbumArtistActivity.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/PermissionsActivity.java"
 }
