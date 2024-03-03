@@ -13,7 +13,7 @@ import androidx.palette.graphics.Palette;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ColorUtils {
+public final class ColorUtils {
     public static final String TAG = "ColorUtils";
     public static final String ARGS = "com.itsmcodez.playful." + TAG;
     private static Palette extractedColorsPalette;
