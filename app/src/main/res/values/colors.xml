@@ -5,6 +5,7 @@
     <color name="colorPrimaryDark">#64B5F6</color>
     <color name="colorAccent">#21C063</color>
     <color name="colorMiniControllerBg">#DDF2F5FD</color>
+    <color name="colorAddPlaylistFabBg">#F2F5FD</color>
     <color name="colorCardBg">@color/white</color>
     <color name="blue_grey_600">#546E7A</color>
     <color name="grey_3">#f7f7f7</color>

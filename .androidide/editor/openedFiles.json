@@ -1,0 +1,50 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/values/colors.xml",
+      "selection": {
+        "end": {
+          "column": 55,
+          "index": 348,
+          "line": 7
+        },
+        "start": {
+          "column": 4,
+          "index": 297,
+          "line": 7
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/values-night/colors.xml",
+      "selection": {
+        "end": {
+          "column": 47,
+          "index": 340,
+          "line": 7
+        },
+        "start": {
+          "column": 47,
+          "index": 340,
+          "line": 7
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/layout/fragment_playlists.xml",
+      "selection": {
+        "end": {
+          "column": 56,
+          "index": 954,
+          "line": 20
+        },
+        "start": {
+          "column": 56,
+          "index": 954,
+          "line": 20
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/layout/fragment_playlists.xml"
+}

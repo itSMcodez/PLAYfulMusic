@@ -18,7 +18,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="96dp"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/colorAddPlaylistFabBg"
         app:backgroundTintMode="src_in"
         app:elevation="0dp"
         app:srcCompat="@drawable/ic_add" />
