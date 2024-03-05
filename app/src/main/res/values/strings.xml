@@ -11,4 +11,8 @@
     <string name="no_songs_text">No songs were found!</string>
     <string name="play_all_bt_text">Play all</string>
     <string name="shuffle_all_bt_text">Shuffle all</string>
+    <string name="layout_add_playlist_text_input_layout_hint">Add a new playlist</string>
+    <string name="fragment_playlists_dialog_positive_bt_text">Add</string>
+    <string name="fragment_playlists_dialog_negative_bt_text">Cancel</string>
+    <string name="fragment_playlists_dialog_title_bt_text">Add a new playlist</string>
 </resources>
