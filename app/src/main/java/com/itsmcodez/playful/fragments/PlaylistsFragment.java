@@ -42,7 +42,7 @@ public class PlaylistsFragment extends Fragment {
         AlertDialog addPlaylistDialog =
                 new MaterialAlertDialogBuilder(context)
                         .setView(layoutAddPlaylistBinding.getRoot())
-                        .setTitle(R.string.fragment_playlists_dialog_title_bt_text)
+                        .setTitle(R.string.fragment_playlists_dialog_title)
                         .setIcon(R.drawable.ic_playlist_plus)
                         .setPositiveButton(
                                 R.string.fragment_playlists_dialog_positive_bt_text,
@@ -50,10 +50,11 @@ public class PlaylistsFragment extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int i) {
                                         if(layoutAddPlaylistBinding.textInputEditText.getText().toString().trim().isEmpty()){
-                                            Toast.makeText(context, "Please type a name for your playlist", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(context, R.string.fragment_playlists_dialog_positive_bt_clicked_rational, Toast.LENGTH_LONG).show();
                                         }
                                         else{
                                             String title = layoutAddPlaylistBinding.textInputEditText.getText().toString();
+                                            Log.d(TAG, "Added " + title);
                                         }
                                     }
                                 })
@@ -70,7 +71,7 @@ public class PlaylistsFragment extends Fragment {
                                 new DialogInterface.OnCancelListener() {
                                     @Override
                                     public void onCancel(DialogInterface dialog) {
-                                        Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, R.string.cancel, Toast.LENGTH_SHORT).show();
                                     }
                                 });
         addPlaylistDialog.show();
