@@ -4,6 +4,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -46,6 +47,28 @@ public class MainActivity extends AppCompatActivity {
         // Default screen
         replaceFragment(songsFragment);
         
+        // scroll to top functionality
+        binding.fabScrollToTop.setOnClickListener(view -> {
+                
+                if(binding.bottomNavBar.getSelectedItemId() == R.id.songs_menu_item){
+                    if(songsFragment.isVisible()){
+                        songsFragment.recyclerViewScrollToTop();
+                    }
+                }
+                
+                if(binding.bottomNavBar.getSelectedItemId() == R.id.albums_menu_item){
+                    if(albumsFragment.isVisible()){
+                        albumsFragment.recyclerViewScrollToTop();
+                    }
+                }
+                
+                if(binding.bottomNavBar.getSelectedItemId() == R.id.artists_menu_item){
+                    if(artistsFragment.isVisible()){
+                        artistsFragment.recyclerViewScrollToTop();
+                    }
+                }
+        });
+        
         // BottomNavigation
         binding.bottomNavBar.setOnItemSelectedListener(
                 new BottomNavigationView.OnItemSelectedListener() {
@@ -61,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
                             if(binding.miniController.getVisibility() != View.VISIBLE){
                                 binding.miniController.setVisibility(View.VISIBLE);
                             }
+                            if(binding.fabScrollToTop.getVisibility() != View.VISIBLE){
+                                binding.fabScrollToTop.setVisibility(View.VISIBLE);
+                            }
                         }
                     
                         if(item.getItemId() == R.id.albums_menu_item){
@@ -70,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                             if(binding.miniController.getVisibility() != View.VISIBLE){
                                 binding.miniController.setVisibility(View.VISIBLE);
+                            }
+                            if(binding.fabScrollToTop.getVisibility() != View.VISIBLE){
+                                binding.fabScrollToTop.setVisibility(View.VISIBLE);
                             }
                         }
                     
@@ -81,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
                             if(binding.miniController.getVisibility() != View.VISIBLE){
                                 binding.miniController.setVisibility(View.VISIBLE);
                             }
+                            if(binding.fabScrollToTop.getVisibility() != View.VISIBLE){
+                                binding.fabScrollToTop.setVisibility(View.VISIBLE);
+                            }
                         }
                     
                         if(item.getItemId() == R.id.playlists_menu_item){
@@ -91,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
                             if(binding.miniController.getVisibility() != View.VISIBLE){
                                 binding.miniController.setVisibility(View.VISIBLE);
                             }
+                            if(binding.fabScrollToTop.getVisibility() == View.VISIBLE){
+                                binding.fabScrollToTop.setVisibility(View.GONE);
+                            }
                         }
                     
                         if(item.getItemId() == R.id.settings_menu_item){
@@ -100,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                             if(binding.miniController.getVisibility() != View.GONE){
                                 binding.miniController.setVisibility(View.GONE);
+                            }
+                            if(binding.fabScrollToTop.getVisibility() == View.VISIBLE){
+                                binding.fabScrollToTop.setVisibility(View.GONE);
                             }
                         }
                     

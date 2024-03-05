@@ -63,4 +63,10 @@ public class SongsFragment extends Fragment {
         super.onDestroyView();
         this.binding = null;
     }
+    
+    public void recyclerViewScrollToTop() {
+    	if((binding.recyclerView.getAdapter() != null) && (binding.recyclerView.getAdapter().getItemCount() != 0)){
+            binding.recyclerView.scrollToPosition(0);
+        }
+    }
 }
