@@ -74,7 +74,7 @@ public final class MusicUtils {
     public static void addPlaylist(Application application, String playlistTitle){
         
         ArrayList<PlaylistsModel> playlists = getAllPlaylists(application);
-        playlists.add(new PlaylistsModel(playlistTitle, null, null, null, null));
+        playlists.add(new PlaylistsModel(playlistTitle, "0 Songs", "00:00", "0", null));
         final int MODE_PRIVATE = 0;
         SharedPreferences sharedPref = application.getSharedPreferences("playlists", MODE_PRIVATE);
         Gson gson = new Gson();

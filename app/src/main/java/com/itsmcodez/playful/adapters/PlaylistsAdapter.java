@@ -28,7 +28,7 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
 
     public static class PlaylistsViewHolder extends RecyclerView.ViewHolder {
         public PlaylistItemViewBinding binding;
-        public TextView playlistTitle;
+        public TextView playlistTitle, playlistInfo;
         public ImageView albumArtwork, itemMenu;
         public CardView itemView;
 
@@ -36,6 +36,7 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
             super(binding.getRoot());
             this.binding = binding;
             this.playlistTitle = binding.playlistTitle;
+            this.playlistInfo = binding.playlistInfo;
             this.itemMenu = binding.itemMenu;
             this.albumArtwork = binding.albumArtwork;
             this.itemView = binding.itemView;
@@ -57,6 +58,7 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
         
         // Metadata 
         viewHolder.playlistTitle.setText(playlist.getTitle());
+        viewHolder.playlistInfo.setText(playlist.getSongsCount() + " • " + playlist.getSongsDuration());
         
         // artwork
         viewHolder.albumArtwork.setImageURI(playlist.getAlbumArtwork());
