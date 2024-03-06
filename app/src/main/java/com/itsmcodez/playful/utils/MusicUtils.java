@@ -1,13 +1,19 @@
 package com.itsmcodez.playful.utils;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadata;
 import android.net.Uri;
 import android.content.ContentUris;
 import android.util.Log;
 import android.widget.ImageView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.itsmcodez.playful.models.PlaylistsModel;
 import com.itsmcodez.playful.models.SongsModel;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public final class MusicUtils {
@@ -46,6 +52,38 @@ public final class MusicUtils {
         Drawable albumDrawable = album.getDrawable();
         getRegistrar();
         return albumDrawable;
+    }
+    
+    public static ArrayList<PlaylistsModel> getAllPlaylists(Application application){
+        
+        ArrayList<PlaylistsModel> playlists = new ArrayList<>();
+        final int MODE_PRIVATE = 0;
+        SharedPreferences sharedPref = application.getSharedPreferences("playlists", MODE_PRIVATE);
+        String allPlaylists = sharedPref.getString("all_playlists", "");
+        
+        if(!allPlaylists.equals("")){
+            Gson gson = new Gson();
+            TypeToken<ArrayList<PlaylistsModel>> playlistToken = new TypeToken<ArrayList<PlaylistsModel>>(){};
+            playlists = gson.fromJson(allPlaylists, playlistToken.getType());
+        }
+        
+        getRegistrar();
+        return playlists;
+    }
+    
+    public static void addPlaylist(Application application, String playlistTitle){
+        
+        ArrayList<PlaylistsModel> playlists = getAllPlaylists(application);
+        playlists.add(new PlaylistsModel(playlistTitle, null, null, null, null));
+        final int MODE_PRIVATE = 0;
+        SharedPreferences sharedPref = application.getSharedPreferences("playlists", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String allPlaylists = gson.toJson(playlists);
+        SharedPreferences.Editor prefEditor = sharedPref.edit();
+        prefEditor.putString("all_playlists", allPlaylists);
+        prefEditor.apply();
+        
+        getRegistrar();
     }
     
     public static String getRegistrar(){
