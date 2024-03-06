@@ -26,7 +26,7 @@ public class PlaylistsFragment extends Fragment {
     private FragmentPlaylistsBinding binding;
     private static final String TAG = "PlaylistsFragment";
     private PlaylistsAdapter playlistsAdapter;
-    private PlaylistsViewModel playlistsViewModel;
+    private static PlaylistsViewModel playlistsViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class PlaylistsFragment extends Fragment {
                                 
                                 playlistsAdapter = new PlaylistsAdapter(container.getContext(), inflater, allPlaylists);
                                 binding.recyclerView.setAdapter(playlistsAdapter);
+                                playlistsAdapter.notifyDataSetChanged();
                                 
                             }
                         });
@@ -130,5 +131,7 @@ public class PlaylistsFragment extends Fragment {
         this.binding = null;
     }
 
-    private void addPlaylist() {}
+    public static PlaylistsViewModel getViewModel() {
+        return playlistsViewModel;
+    }
 }

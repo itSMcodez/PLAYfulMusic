@@ -38,4 +38,10 @@ public class PlaylistsRepository {
         playlists = MusicUtils.getAllPlaylists(application);
         allPlaylists = new MutableLiveData<>(playlists);
     }
+    
+    public synchronized void deletePlaylist(int position){
+        MusicUtils.deletePlaylist(application, position);
+        playlists = MusicUtils.getAllPlaylists(application);
+        allPlaylists = new MutableLiveData<>(playlists);
+    }
 }

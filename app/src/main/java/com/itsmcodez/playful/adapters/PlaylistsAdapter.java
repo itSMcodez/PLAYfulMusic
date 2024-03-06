@@ -2,14 +2,18 @@ package com.itsmcodez.playful.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import com.itsmcodez.playful.R;
 import com.itsmcodez.playful.databinding.PlaylistItemViewBinding;
+import com.itsmcodez.playful.fragments.PlaylistsFragment;
 import com.itsmcodez.playful.models.PlaylistsModel;
 import java.util.ArrayList;
 
@@ -20,7 +24,8 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
     private ArrayList<PlaylistsModel> playlists;
     private OnClickEvents onClickEvents;
 
-    public PlaylistsAdapter(Context context, LayoutInflater inflater, ArrayList<PlaylistsModel> playlists) {
+    public PlaylistsAdapter(
+            Context context, LayoutInflater inflater, ArrayList<PlaylistsModel> playlists) {
         this.context = context;
         this.inflater = inflater;
         this.playlists = playlists;
@@ -52,49 +57,66 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
 
     @Override
     public void onBindViewHolder(PlaylistsAdapter.PlaylistsViewHolder viewHolder, int position) {
-        
-        // get playlist at position 
+
+        // get playlist at position
         PlaylistsModel playlist = playlists.get(position);
-        
-        // Metadata 
+
+        // Metadata
         viewHolder.playlistTitle.setText(playlist.getTitle());
-        viewHolder.playlistInfo.setText(playlist.getSongsCount() + " • " + playlist.getSongsDuration());
-        
+        viewHolder.playlistInfo.setText(
+                playlist.getSongsCount() + " • " + playlist.getSongsDuration());
+
         // artwork
         viewHolder.albumArtwork.setImageURI(playlist.getAlbumArtwork());
-        if(viewHolder.albumArtwork.getDrawable() == null){
-            viewHolder.albumArtwork.setImageDrawable(context.getDrawable(R.drawable.ic_playlist_music_outline));
+        if (viewHolder.albumArtwork.getDrawable() == null) {
+            viewHolder.albumArtwork.setImageDrawable(
+                    context.getDrawable(R.drawable.ic_playlist_music_outline));
         }
-        
-        viewHolder.itemView.setOnClickListener(view -> {
-                if(onClickEvents != null){
-                    onClickEvents.onItemClick(view, playlist, position);
-                }
-        });
-        
-        viewHolder.itemMenu.setOnClickListener(view -> {
-                
-        });
+
+        viewHolder.itemView.setOnClickListener(
+                view -> {
+                    if (onClickEvents != null) {
+                        onClickEvents.onItemClick(view, playlist, position);
+                    }
+                });
+
+        viewHolder.itemMenu.setOnClickListener(
+                view -> {
+                    PopupMenu popupMenu = new PopupMenu(context, view);
+                    popupMenu.inflate(R.menu.fragment_playlists_item_view_menu);
+                    popupMenu.show();
+
+                    popupMenu.setOnMenuItemClickListener(
+                            new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                            
+                                    PlaylistsFragment.getViewModel().deletePlaylist(position);
+                                    
+                                    return true;
+                                }
+                            });
+                });
     }
 
     @Override
     public int getItemCount() {
         int size;
-        
-        if(playlists != null && playlists.size() > 0){
+
+        if (playlists != null && playlists.size() > 0) {
             size = playlists.size();
-        }
-        else size = 0;
-        
+        } else size = 0;
+
         return size;
     }
-    
-    public void setOnClickEvents(OnClickEvents onClickEvents){
+
+    public void setOnClickEvents(OnClickEvents onClickEvents) {
         this.onClickEvents = onClickEvents;
     }
-    
-    public interface OnClickEvents{
+
+    public interface OnClickEvents {
         void onItemClick(View view, PlaylistsModel playlist, int position);
+
         boolean onItemLongClick(View view, PlaylistsModel playlist, int position);
     }
 }

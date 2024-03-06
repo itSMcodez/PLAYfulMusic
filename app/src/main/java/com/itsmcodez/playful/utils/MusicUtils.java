@@ -86,6 +86,21 @@ public final class MusicUtils {
         getRegistrar();
     }
     
+    public static void deletePlaylist(Application application, int position) {
+        
+    	ArrayList<PlaylistsModel> playlists = getAllPlaylists(application);
+        playlists.remove(position);
+        final int MODE_PRIVATE = 0;
+        SharedPreferences sharedPref = application.getSharedPreferences("playlists", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String allPlaylists = gson.toJson(playlists);
+        SharedPreferences.Editor prefEditor = sharedPref.edit();
+        prefEditor.putString("all_playlists", allPlaylists);
+        prefEditor.apply();
+        
+        getRegistrar();
+    }
+    
     public static String getRegistrar(){
         Log.i(TAG, "Accessing registrar...");
         return MusicUtils.ARGS;
