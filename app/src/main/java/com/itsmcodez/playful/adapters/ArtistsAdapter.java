@@ -54,7 +54,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistsV
     @Override
     public void onBindViewHolder(ArtistsAdapter.ArtistsViewHolder viewHolder, int position) {
         
-        // get album at position 
+        // get artist at position 
         ArtistsModel artist = artists.get(position);
         
         // Metadata 
