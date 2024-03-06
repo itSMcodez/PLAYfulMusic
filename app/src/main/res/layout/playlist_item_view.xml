@@ -61,8 +61,10 @@
             </LinearLayout>
 
             <ImageView
-                 android:layout_height="24dp"
-                 android:layout_width="24dp"
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:padding="16dp"
+                 android:scaleType="fitCenter"
                  android:background="?attr/roundSelector"
                  android:src="@drawable/ic_dots_vertical"
                  android:layout_centerVertical="true"
