@@ -63,6 +63,7 @@
             <ImageView
                  android:layout_height="24dp"
                  android:layout_width="24dp"
+                 android:background="?attr/roundSelector"
                  android:src="@drawable/ic_dots_vertical"
                  android:layout_centerVertical="true"
                  android:layout_margin="8dp"
