@@ -67,7 +67,9 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
         }
         
         viewHolder.itemView.setOnClickListener(view -> {
-                onClickEvents.onItemClick(view, playlist, position);
+                if(onClickEvents != null){
+                    onClickEvents.onItemClick(view, playlist, position);
+                }
         });
         
         viewHolder.itemMenu.setOnClickListener(view -> {

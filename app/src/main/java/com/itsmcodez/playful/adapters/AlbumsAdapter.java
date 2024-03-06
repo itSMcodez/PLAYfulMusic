@@ -64,7 +64,9 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
         }
         
         viewHolder.itemView.setOnClickListener(view -> {
-            onClickEvents.onItemClick(view, album, position);
+                if(onClickEvents != null){
+                    onClickEvents.onItemClick(view, album, position);
+                }
         });
     }
 

@@ -68,7 +68,9 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistsV
         }
         
         viewHolder.itemView.setOnClickListener(view -> {
-            onClickEvents.onItemClick(view, artist, position);
+                if(onClickEvents != null){
+                    onClickEvents.onItemClick(view, artist, position);
+                }
         });
     }
 
