@@ -2,6 +2,7 @@ package com.itsmcodez.playful.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistsV
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<ArtistsModel> artists;
+    private OnClickEvents onClickEvents;
 
     public ArtistsAdapter(Context context, LayoutInflater inflater, ArrayList<ArtistsModel> artists) {
         this.context = context;
@@ -52,7 +54,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistsV
     @Override
     public void onBindViewHolder(ArtistsAdapter.ArtistsViewHolder viewHolder, int position) {
         
-        // get album at position 
+        // get artist at position 
         ArtistsModel artist = artists.get(position);
         
         // Metadata 
@@ -66,7 +68,9 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistsV
         }
         
         viewHolder.itemView.setOnClickListener(view -> {
-            
+                if(onClickEvents != null){
+                    onClickEvents.onItemClick(view, artist, position);
+                }
         });
     }
 
@@ -80,5 +84,14 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ArtistsV
         else size = 0;
         
         return size;
+    }
+    
+    public void setOnClickEvents(OnClickEvents onClickEvents){
+        this.onClickEvents = onClickEvents;
+    }
+    
+    public interface OnClickEvents{
+        void onItemClick(View view, ArtistsModel artist, int position);
+        boolean onItemLongClick(View view, ArtistsModel artist, int position);
     }
 }

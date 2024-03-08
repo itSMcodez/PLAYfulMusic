@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:id="@+id/item_view"
+     android:orientation="horizontal"
+     android:layout_height="wrap_content"
+     android:layout_width="match_parent"
+     android:background="?attr/rectSelector"
+     android:gravity="center_vertical"
+     android:layout_margin="8dp"
+     android:padding="8dp">
+
+    <TextView
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:layout_margin="8dp"
+         android:textSize="18sp"
+         android:id="@+id/playlist_title"
+         android:text="Playlist Title" />
+
+</LinearLayout>

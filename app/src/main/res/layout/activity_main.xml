@@ -112,6 +112,19 @@
             
         </androidx.cardview.widget.CardView>
         
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_scroll_to_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="96dp"
+            app:backgroundTint="@color/colorAddPlaylistFabBg"
+            app:backgroundTintMode="src_in"
+            app:elevation="0dp"
+            app:srcCompat="@drawable/ic_arrow_up"  />
+        
     </RelativeLayout>
     
     <com.google.android.material.bottomnavigation.BottomNavigationView

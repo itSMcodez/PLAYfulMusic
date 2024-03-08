@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_height="wrap_content"
+     android:layout_width="170dp"
+     android:clickable="true"
+     android:layout_margin="8dp"
+     app:cardElevation="0dp"
+     app:cardBackgroundColor="@color/colorCardBg"
+     app:cardCornerRadius="25dp"
+     android:focusable="true"
+     android:id="@+id/item_view"
+     android:layout_gravity="center"
+     android:foreground="?attr/rectSelector">
+
+    <RelativeLayout
+         android:layout_height="match_parent"
+         android:layout_width="match_parent">
+
+        <ImageView
+             android:layout_height="136dp"
+             android:layout_width="match_parent"
+             android:scaleType="centerCrop"
+             android:layout_marginBottom="8dp"
+             android:src="@drawable/ic_playlist_music_outline"
+             android:layout_centerHorizontal="true"
+             android:layout_alignParentTop="true"
+             android:id="@+id/album_artwork" />
+
+        <RelativeLayout
+             android:layout_height="wrap_content"
+             android:layout_width="match_parent"
+             android:layout_marginBottom="8dp"
+             android:layout_below="@id/album_artwork"
+             android:layout_centerHorizontal="true">
+
+            <LinearLayout
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:layout_toStartOf="@id/item_menu"
+                 android:layout_centerVertical="true"
+                 android:orientation="vertical"
+                 android:layout_marginStart="8dp"
+                 android:layout_alignParentStart="true">
+
+                <TextView
+                     android:layout_height="wrap_content"
+                     android:layout_width="wrap_content"
+                     android:textSize="18sp"
+                     android:id="@+id/playlist_title"
+                     android:textStyle="bold"
+                     android:text="Playlist title" />
+
+                <TextView
+                     android:layout_height="wrap_content"
+                     android:layout_width="wrap_content"
+                     android:textSize="14sp"
+                     android:id="@+id/playlist_info"
+                     android:text="Playlist Info" />
+
+            </LinearLayout>
+
+            <ImageView
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:padding="16dp"
+                 android:scaleType="fitCenter"
+                 android:background="?attr/roundSelector"
+                 android:src="@drawable/ic_dots_vertical"
+                 android:layout_centerVertical="true"
+                 android:layout_margin="8dp"
+                 android:layout_alignParentEnd="true"
+                 android:id="@+id/item_menu" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -8,5 +8,23 @@
     <string name="storage_permission_description">This permission is needed in order to show songs from your storage, Click on it to allow</string>
     <string name="activity_main_action_bar_title">PLAYful</string>
     <string name="activity_main_action_bar_subtitle">Music Player</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="confirm">Confirm</string>
+    <string name="confirm_deletion">Confirm Delete</string>
+    <string name="delete_rational">Do you want to delete</string>
+    <string name="delete_playlist_rational">This will not delete any of the songs in the playlist</string>
     <string name="no_songs_text">No songs were found!</string>
+    <string name="play_all_bt_text">Play all</string>
+    <string name="shuffle_all_bt_text">Shuffle all</string>
+    <string name="layout_add_playlist_text_input_layout_hint">Type playlist name...</string>
+    <string name="fragment_playlists_dialog_positive_bt_text">Add</string>
+    <string name="fragment_playlists_dialog_positive_bt_clicked_rational">Please type a name for your playlist!</string>
+    <string name="fragment_playlists_dialog_negative_bt_text">Cancel</string>
+    <string name="fragment_playlists_dialog_title">Add a new playlist</string>
+    <string name="activity_debug_dialog_neutral_bt_text">End application</string>
+    <string name="activity_debug_dialog_positive_bt_text">Report crash</string>
+    <string name="activity_debug_dialog_title">Error: Application crashed!</string>
+    <string name="add_song_to_playlist">Add to a playlist</string>
+    <string name="select_playlist_dialog_title">Select a playlist</string>
 </resources>
