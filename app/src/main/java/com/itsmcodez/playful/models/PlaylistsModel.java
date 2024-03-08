@@ -1,22 +1,23 @@
 package com.itsmcodez.playful.models;
 
 import android.net.Uri;
+import java.util.ArrayList;
 
 public class PlaylistsModel {
     private String title, songsCount, songsDuration, albumId;
     private Uri albumArtwork;
+    private ArrayList<PlaylistSongsModel> songs;
 
     public PlaylistsModel(
             String title,
             String songsCount,
             String songsDuration,
-            String albumId,
-            Uri albumArtwork) {
+            String albumId) {
         this.title = title;
         this.songsCount = songsCount;
         this.songsDuration = songsDuration;
         this.albumId = albumId;
-        this.albumArtwork = albumArtwork;
+        this.songs = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -51,11 +52,11 @@ public class PlaylistsModel {
         this.albumId = albumId;
     }
 
-    public Uri getAlbumArtwork() {
-        return this.albumArtwork;
+    public ArrayList<PlaylistSongsModel> getSongs() {
+        return this.songs;
     }
 
-    public void setAlbumArtwork(Uri albumArtwork) {
-        this.albumArtwork = albumArtwork;
+    public void setSongs(ArrayList<PlaylistSongsModel> songs) {
+        this.songs = songs;
     }
 }

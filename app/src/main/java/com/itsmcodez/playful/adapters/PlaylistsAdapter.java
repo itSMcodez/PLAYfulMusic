@@ -1,16 +1,22 @@
 package com.itsmcodez.playful.adapters;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.itsmcodez.playful.R;
 import com.itsmcodez.playful.databinding.PlaylistItemViewBinding;
 import com.itsmcodez.playful.fragments.PlaylistsFragment;
@@ -63,12 +69,27 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
 
         // Metadata
         viewHolder.playlistTitle.setText(playlist.getTitle());
-        viewHolder.playlistInfo.setText(
-                playlist.getSongsCount() + " • " + playlist.getSongsDuration());
+        if (playlist.getSongsCount().equals("1")) {
+            viewHolder.playlistInfo.setText(
+                    playlist.getSongsCount() + " Song" + " • " + playlist.getSongsDuration());
+        } else if (playlist.getSongsCount().equals("0 Songs")) {
+            viewHolder.playlistInfo.setText("0 Songs" + " • " + playlist.getSongsDuration());
+        } else {
+            viewHolder.playlistInfo.setText(
+                    playlist.getSongsCount() + " Songs" + " • " + playlist.getSongsDuration());
+        }
 
         // artwork
-        viewHolder.albumArtwork.setImageURI(playlist.getAlbumArtwork());
-        if (viewHolder.albumArtwork.getDrawable() == null) {
+        if (playlist.getSongs() != null && playlist.getSongs().size() != 0) {
+            var albumId = playlist.getSongs().get(playlist.getSongs().size() - 1).getAlbumId();
+            Uri albumPath = Uri.parse("content://media/external/audio/albumart");
+            Uri albumArtwork = ContentUris.withAppendedId(albumPath, Integer.parseInt(albumId));
+            viewHolder.albumArtwork.setImageURI(albumArtwork);
+            if (viewHolder.albumArtwork.getDrawable() == null) {
+                viewHolder.albumArtwork.setImageDrawable(
+                        context.getDrawable(R.drawable.ic_playlist_music_outline));
+            }
+        } else {
             viewHolder.albumArtwork.setImageDrawable(
                     context.getDrawable(R.drawable.ic_playlist_music_outline));
         }
@@ -90,9 +111,69 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
                             new PopupMenu.OnMenuItemClickListener() {
                                 @Override
                                 public boolean onMenuItemClick(MenuItem item) {
-                            
-                                    PlaylistsFragment.getViewModel().deletePlaylist(position);
-                                    
+
+                                    if (item.getItemId() == R.id.delete_menu_item) {
+
+                                        if (playlist.getTitle().equals("Favourites")) {
+                                            Toast.makeText(
+                                                            context.getApplicationContext(),
+                                                            "Cannot delete " + playlist.getTitle(),
+                                                            Toast.LENGTH_LONG)
+                                                    .show();
+                                        } else {
+                                            AlertDialog confirmDialog =
+                                                    new MaterialAlertDialogBuilder(context)
+                                                            .setTitle(R.string.confirm_deletion)
+                                                            .setMessage(
+                                                                    "Are you sure you want to delete "
+                                                                            + "\""
+                                                                            + playlist.getTitle()
+                                                                            + "\"? "
+                                                                            + "This will not affect or delete any of the songs in the playlist")
+                                                            .setPositiveButton(
+                                                                    R.string.confirm,
+                                                                    new DialogInterface
+                                                                            .OnClickListener() {
+
+                                                                        @Override
+                                                                        public void onClick(
+                                                                                DialogInterface
+                                                                                        dialog,
+                                                                                int which) {
+
+                                                                            Toast.makeText(
+                                                                                            context
+                                                                                                    .getApplicationContext(),
+                                                                                            "Deleted "
+                                                                                                    + playlist
+                                                                                                            .getTitle(),
+                                                                                            Toast
+                                                                                                    .LENGTH_LONG)
+                                                                                    .show();
+
+                                                                            PlaylistsFragment
+                                                                                    .getViewModel()
+                                                                                    .deletePlaylist(
+                                                                                            position);
+                                                                        }
+                                                                    })
+                                                            .setNegativeButton(
+                                                                    R.string.cancel,
+                                                                    new DialogInterface
+                                                                            .OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(
+                                                                                DialogInterface
+                                                                                        dialog,
+                                                                                int which) {
+                                                                            dialog.cancel();
+                                                                        }
+                                                                    })
+                                                            .create();
+                                            confirmDialog.show();
+                                        }
+                                    }
+
                                     return true;
                                 }
                             });

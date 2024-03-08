@@ -58,6 +58,9 @@ public class PlaylistsFragment extends Fragment {
                             @Override
                             public void onChanged(ArrayList<PlaylistsModel> allPlaylists) {
                                 
+                                if(allPlaylists.size() == 0){
+                                    playlistsViewModel.addPlaylist("Favourites");
+                                }
                                 playlistsAdapter = new PlaylistsAdapter(container.getContext(), inflater, allPlaylists);
                                 binding.recyclerView.setAdapter(playlistsAdapter);
                                 playlistsAdapter.notifyDataSetChanged();
