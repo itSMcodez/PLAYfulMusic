@@ -8,6 +8,7 @@
     <string name="storage_permission_description">This permission is needed in order to show songs from your storage, Click on it to allow</string>
     <string name="activity_main_action_bar_title">PLAYful</string>
     <string name="activity_main_action_bar_subtitle">Music Player</string>
+    <string name="activity_main_search_view_hint">Search for song or artist</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="rename">Rename</string>
