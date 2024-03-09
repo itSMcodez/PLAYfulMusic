@@ -39,6 +39,11 @@ public class PlaylistsViewModel extends AndroidViewModel {
         allPlaylists.setValue(MusicUtils.getAllPlaylists(application));
     }
     
+    public void renamePlaylist(String newName, int position){
+        playlistsRepository.renamePlaylist(newName, position);
+        allPlaylists.setValue(MusicUtils.getAllPlaylists(application));
+    }
+    
     public void addSongToPlaylist(PlaylistSongsModel song, int position){
         playlistsRepository.addSongToPlaylist(song, position);
         allPlaylists.setValue(MusicUtils.getAllPlaylists(application));

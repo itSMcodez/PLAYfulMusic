@@ -60,6 +60,12 @@ public class PlaylistsRepository {
         allPlaylists = new MutableLiveData<>(playlists);
     }
     
+    public synchronized void renamePlaylist(String newName, int position){
+        MusicUtils.renamePlaylist(application, newName, position);
+        playlists = MusicUtils.getAllPlaylists(application);
+        allPlaylists = new MutableLiveData<>(playlists);
+    }
+    
     public synchronized void addSongToPlaylist(PlaylistSongsModel song, int position){
         MusicUtils.addSongToPlaylist(application, song, position);
         playlists = MusicUtils.getAllPlaylists(application);

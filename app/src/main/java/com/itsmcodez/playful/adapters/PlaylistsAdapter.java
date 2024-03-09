@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.itsmcodez.playful.R;
+import com.itsmcodez.playful.databinding.LayoutAddPlaylistBinding;
 import com.itsmcodez.playful.databinding.PlaylistItemViewBinding;
 import com.itsmcodez.playful.fragments.PlaylistsFragment;
 import com.itsmcodez.playful.models.PlaylistsModel;
@@ -171,6 +172,95 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
                                                                     })
                                                             .create();
                                             confirmDialog.show();
+                                        }
+                                    }
+
+                                    if (item.getItemId() == R.id.rename_menu_item) {
+
+                                        if (playlist.getTitle().equals("Favourites")) {
+                                            Toast.makeText(
+                                                            context.getApplicationContext(),
+                                                            "Cannot rename " + playlist.getTitle(),
+                                                            Toast.LENGTH_LONG)
+                                                    .show();
+                                        } else {
+
+                                            LayoutAddPlaylistBinding textInputLayout =
+                                                    LayoutAddPlaylistBinding.inflate(inflater);
+
+                                            AlertDialog renameDialog =
+                                                    new MaterialAlertDialogBuilder(context)
+                                                            .setTitle(R.string.rename)
+                                                            .setMessage(
+                                                                    "Are you sure you want to rename "
+                                                                            + "\""
+                                                                            + playlist.getTitle()
+                                                                            + "\"? "
+                                                                            + "Type the new name for the playlist below")
+                                                            .setView(textInputLayout.getRoot())
+                                                            .setPositiveButton(
+                                                                    R.string.rename,
+                                                                    new DialogInterface
+                                                                            .OnClickListener() {
+
+                                                                        @Override
+                                                                        public void onClick(
+                                                                                DialogInterface
+                                                                                        dialog,
+                                                                                int which) {
+
+                                                                            Toast.makeText(
+                                                                                            context
+                                                                                                    .getApplicationContext(),
+                                                                                            "Renamed "
+                                                                                                    + playlist
+                                                                                                            .getTitle(),
+                                                                                            Toast
+                                                                                                    .LENGTH_LONG)
+                                                                                    .show();
+
+                                                                            if (textInputLayout
+                                                                                    .textInputEditText
+                                                                                    .getText()
+                                                                                    .toString()
+                                                                                    .trim()
+                                                                                    .isEmpty()) {
+                                                                                Toast.makeText(
+                                                                                                context,
+                                                                                                R
+                                                                                                        .string
+                                                                                                        .fragment_playlists_dialog_positive_bt_clicked_rational,
+                                                                                                Toast
+                                                                                                        .LENGTH_LONG)
+                                                                                        .show();
+                                                                            } else {
+                                                                                String newName = textInputLayout
+                                                                                                .textInputEditText
+                                                                                                .getText()
+                                                                                                .toString();
+                                                    
+                                                                                PlaylistsFragment
+                                                                                    .getViewModel()
+                                                                                    .renamePlaylist(
+                                                                                            newName,
+                                                                                            position);
+                                                                            }
+                                                                        }
+                                                                    })
+                                                            .setNegativeButton(
+                                                                    R.string.cancel,
+                                                                    new DialogInterface
+                                                                            .OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(
+                                                                                DialogInterface
+                                                                                        dialog,
+                                                                                int which) {
+                                                                            dialog.cancel();
+                                                                        }
+                                                                    })
+                                                            .create();
+                                            renameDialog.show();
                                         }
                                     }
 

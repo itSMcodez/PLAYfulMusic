@@ -10,6 +10,7 @@
     <string name="activity_main_action_bar_subtitle">Music Player</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="rename">Rename</string>
     <string name="confirm">Confirm</string>
     <string name="confirm_deletion">Confirm Delete</string>
     <string name="delete_rational">Do you want to delete</string>

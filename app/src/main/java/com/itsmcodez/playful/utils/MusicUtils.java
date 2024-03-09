@@ -118,6 +118,21 @@ public final class MusicUtils {
         getRegistrar();
     }
     
+    public static void renamePlaylist(Application application, String newName, int position) {
+        
+    	ArrayList<PlaylistsModel> playlists = getAllPlaylists(application);
+        playlists.get(position).setTitle(newName);
+        final int MODE_PRIVATE = 0;
+        SharedPreferences sharedPref = application.getSharedPreferences("playlists", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String allPlaylists = gson.toJson(playlists);
+        SharedPreferences.Editor prefEditor = sharedPref.edit();
+        prefEditor.putString("all_playlists", allPlaylists);
+        prefEditor.apply();
+        
+        getRegistrar();
+    }
+    
     public static void addSongToPlaylist(Application application, PlaylistSongsModel song, int position){
         
         ArrayList<PlaylistsModel> playlists = getAllPlaylists(application);
