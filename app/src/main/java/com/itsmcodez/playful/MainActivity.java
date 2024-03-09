@@ -1,5 +1,7 @@
 package com.itsmcodez.playful;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -165,6 +168,14 @@ public class MainActivity extends AppCompatActivity {
         
         // assign sort_menu_item to sortMenuItem
         sortMenuItem = menu.findItem(R.id.sort_menu_item);
+        
+        // SearchView
+        MenuItem searchMenuItem = menu.findItem(R.id.search_menu_item);
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setQueryRefinementEnabled(true);
         
         return super.onCreateOptionsMenu(menu);
     }
