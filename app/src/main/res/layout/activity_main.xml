@@ -33,6 +33,7 @@
             android:id="@+id/mini_controller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="?attr/rectSelector"
             android:clickable="true"
             android:focusable="true"
             android:padding="8dp"
@@ -67,6 +68,9 @@
                         android:id="@+id/song_title"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:text="Song title"/>
@@ -75,6 +79,9 @@
                         android:id="@+id/song_artist"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
                         android:textSize="14sp"
                         android:text="Song artist"/>
                     

@@ -84,7 +84,8 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
         if (playlist.getSongs() != null && playlist.getSongs().size() != 0) {
             var albumId = playlist.getSongs().get(playlist.getSongs().size() - 1).getAlbumId();
             Uri albumPath = Uri.parse("content://media/external/audio/albumart");
-            Uri albumArtwork = ContentUris.withAppendedId(albumPath, Integer.parseInt(albumId));
+            long _albumId = Long.parseLong(albumId);
+            Uri albumArtwork = ContentUris.withAppendedId(albumPath, _albumId);
             viewHolder.albumArtwork.setImageURI(albumArtwork);
             if (viewHolder.albumArtwork.getDrawable() == null) {
                 viewHolder.albumArtwork.setImageDrawable(

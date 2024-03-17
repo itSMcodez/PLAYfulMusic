@@ -34,6 +34,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<SongsModel> songs;
+    private OnClickEvents onClickEvents;
 
     public SongsAdapter(Context context, LayoutInflater inflater, ArrayList<SongsModel> songs) {
         this.context = context;
@@ -82,7 +83,11 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
             viewHolder.albumArtwork.setImageDrawable(context.getDrawable(R.drawable.ic_music_note));
         }
 
-        viewHolder.itemView.setOnClickListener(view -> {});
+        viewHolder.itemView.setOnClickListener(view -> {
+                if(onClickEvents != null){
+                    onClickEvents.onItemClick(view, song, position);
+                }
+        });
 
         viewHolder.itemMenu.setOnClickListener(
                 view -> {
@@ -202,5 +207,14 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
         } else size = 0;
 
         return size;
+    }
+    
+    public void setOnClickEvents(OnClickEvents onClickEvents){
+        this.onClickEvents = onClickEvents;
+    }
+    
+    public interface OnClickEvents{
+        void onItemClick(View view, SongsModel song, int position);
+        boolean onItemLongClick(View view, SongsModel song, int position);
     }
 }

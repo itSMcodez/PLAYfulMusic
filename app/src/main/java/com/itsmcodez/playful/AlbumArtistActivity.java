@@ -1,7 +1,9 @@
 package com.itsmcodez.playful;
 
+import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,25 +15,31 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.view.View;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.media3.common.MediaItem;
+import androidx.media3.common.MediaMetadata;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.itsmcodez.playful.adapters.SongsAdapter;
 import com.itsmcodez.playful.databinding.ActivityAlbumArtistBinding;
 import com.itsmcodez.playful.models.SongsModel;
+import com.itsmcodez.playful.services.MusicService;
 import com.itsmcodez.playful.utils.ColorUtils;
 import com.itsmcodez.playful.utils.MusicUtils;
 import com.itsmcodez.playful.viewmodels.SongsViewModel;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class AlbumArtistActivity extends AppCompatActivity {
+public class AlbumArtistActivity extends AppCompatActivity implements ServiceConnection {
     private ActivityAlbumArtistBinding binding;
     private SongsViewModel songsViewModel;
     private SongsAdapter songsAdapter;
+    private MusicService musicService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,20 @@ public class AlbumArtistActivity extends AppCompatActivity {
         // RecyclerView
         binding.recyclerView.setLayoutManager(
                 new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+
+        // Play all button onClick
+        binding.playAllBt.setOnClickListener(
+                view -> {
+                    if (!musicService.isStarted) {
+                        startService(new Intent(AlbumArtistActivity.this, MusicService.class));
+                    }
+
+                    if (musicService.getPlayer().isPlaying()) {
+                        musicService.getPlayer().stop();
+                    }
+                
+                    musicService.getPlayer().setMediaItems(MusicUtils.getMediaItems(), 0, 0);
+                });
 
         // ViewModel
         songsViewModel = new ViewModelProvider(AlbumArtistActivity.this).get(SongsViewModel.class);
@@ -102,10 +124,10 @@ public class AlbumArtistActivity extends AppCompatActivity {
                             new Observer<ArrayList<SongsModel>>() {
                                 @Override
                                 public void onChanged(ArrayList<SongsModel> allSongs) {
-                                    
+                        
                                     // allSongs duration
-                                    var sum = 0;
-                                    var duration = 0;
+                                    var sum = 0L;
+                                    var duration = 0L;
                         
                                     // Filter
                                     ArrayList<SongsModel> filteredSongs = new ArrayList<>();
@@ -115,8 +137,8 @@ public class AlbumArtistActivity extends AppCompatActivity {
                                         for(SongsModel song : allSongs){
                                             if(song.getAlbum().equals(title)){
                                                 filteredSongs.add(song);
-                                                duration = sum + Integer.parseInt(song.getDuration());
-                                                sum = sum + Integer.parseInt(song.getDuration());
+                                                duration = sum + Long.parseLong(song.getDuration());
+                                                sum = sum + Long.parseLong(song.getDuration());
                                             }
                                         }
                                     }
@@ -125,12 +147,14 @@ public class AlbumArtistActivity extends AppCompatActivity {
                                         for(SongsModel song : allSongs){
                                             if(song.getArtist().equals(title)){
                                                 filteredSongs.add(song);
-                                                duration = sum + Integer.parseInt(song.getDuration());
-                                                sum = sum + Integer.parseInt(song.getDuration());
+                                                duration = sum + Long.parseLong(song.getDuration());
+                                                sum = sum + Long.parseLong(song.getDuration());
                                             }
                                         }
                                     }
-                                    
+                        
+                                    // Set media items
+                                    MusicUtils.setMediaItems(getMediaItems(filteredSongs));
                         
                                     songsAdapter = new SongsAdapter(AlbumArtistActivity.this, getLayoutInflater(), filteredSongs);
                                     binding.recyclerView.setAdapter(songsAdapter);
@@ -141,8 +165,82 @@ public class AlbumArtistActivity extends AppCompatActivity {
                                     else{
                                         binding.info.setText(binding.recyclerView.getAdapter().getItemCount() + " Songs • " + MusicUtils.getFormattedTime(duration) );
                                     }
+                        
+                                    songsAdapter.setOnClickEvents(
+                                        new SongsAdapter.OnClickEvents() {
+                                            @Override
+                                            public void onItemClick(
+                                                    View view, SongsModel song, int position) {
+                                    
+                                                        // Set media items
+                                                        MusicUtils.setMediaItems(getMediaItems(filteredSongs));
+                                
+                                                        if(!musicService.isStarted){
+                                                            startService(new Intent(AlbumArtistActivity.this, MusicService.class));
+                                                        }
+                                
+                                                        if(musicService.getPlayer().isPlaying()){
+                                                            musicService.getPlayer().stop();
+                                                        }
+                                    
+                                                        musicService.getPlayer().setMediaItems(MusicUtils.getMediaItems(), position, 0);
+                                                    }
+
+                                            @Override
+                                            public boolean onItemLongClick(
+                                                    View view, SongsModel song, int position) {
+                                                        return false;
+                                                    }
+                                        });
                                 }
                             });
         }
+    }
+    
+    @Override
+    protected void onResume() {
+        bindService(new Intent(AlbumArtistActivity.this, MusicService.class), this, BIND_AUTO_CREATE);
+        super.onResume();
+    }
+    
+    @Override
+    protected void onPause() {
+        unbindService(this);
+        super.onPause();
+    }
+    
+    public ArrayList<MediaItem> getMediaItems(ArrayList<SongsModel> songs) {
+        ArrayList<MediaItem> mediaItems = new ArrayList<>();
+
+        for (SongsModel song : songs) {
+            
+            MediaMetadata mediaMetadata = new MediaMetadata.Builder()
+                                            .setTitle(song.getTitle())
+                                            .setAlbumTitle(song.getAlbum())
+                                            .setArtworkUri(song.getAlbumArtwork())
+                                            .setArtist(song.getArtist())
+                                            .build();
+            
+            MediaItem mediaItem =
+                    new MediaItem.Builder()
+                            .setUri(song.getPath())
+                            .setMediaMetadata(mediaMetadata)
+                            .build();
+
+            mediaItems.add(mediaItem);
+        }
+
+        return mediaItems;
+    }
+    
+    @Override
+    public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+        MusicService.MusicBinder binder = (MusicService.MusicBinder) iBinder;
+        musicService = binder.getService();
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName componentName) {
+        musicService = null;
     }
 }
