@@ -1,7 +1,12 @@
 package com.itsmcodez.playful;
 
 import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.content.Context;
+import android.content.Intent;
+import com.itsmcodez.playful.utils.MusicUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,10 +25,13 @@ import com.itsmcodez.playful.fragments.ArtistsFragment;
 import com.itsmcodez.playful.fragments.PlaylistsFragment;
 import com.itsmcodez.playful.fragments.SettingsFragment;
 import com.itsmcodez.playful.fragments.SongsFragment;
+import com.itsmcodez.playful.services.MusicService;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ServiceConnection {
     private ActivityMainBinding binding;
     private MenuItem sortMenuItem;
+    private MusicService musicService;
+    private boolean isPlayerPlaying = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
                         artistsFragment.recyclerViewScrollToTop();
                     }
                 }
+        });
+        
+        // Mini Controller
+        binding.miniController.setOnClickListener(view -> {
+                startActivity(new Intent(MainActivity.this, PlayerActivity.class));
         });
         
         // BottomNavigation
@@ -153,6 +166,128 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         this.binding = null;
+        if(!isPlayerPlaying){
+            stopService(new Intent(MainActivity.this, MusicService.class));
+        }
+    }
+    
+    @Override
+    protected void onResume() {
+        bindService(
+                new Intent(MainActivity.this, MusicService.class),
+                this,
+                BIND_AUTO_CREATE);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        
+        if(musicService != null) {
+        	if(musicService.getPlayer().isPlaying()){
+                isPlayerPlaying = true;
+            }
+            else{
+                isPlayerPlaying = false;
+            }
+            musicService.setStateHandler(null);
+            unbindService(this);
+        }
+        super.onPause();
+    }
+    
+    @Override
+    public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+        MusicService.MusicBinder binder = (MusicService.MusicBinder) iBinder;
+        musicService = binder.getService();
+        
+        // Check if player is not null and set metadata to current media item if true
+        if(musicService.getPlayer().getMediaItemCount() != 0 && musicService.getPlayer().getCurrentMediaItem() != null){
+                // Metadata
+                binding.songTitle.setSelected(true);
+                binding.songTitle.setText(musicService.getPlayer().getCurrentMediaItem().mediaMetadata.title);
+                binding.songArtist.setText(musicService.getPlayer().getCurrentMediaItem().mediaMetadata.artist);
+                
+                // Album artwork 
+                binding.albumArtwork.setImageURI(musicService.getPlayer().getCurrentMediaItem().mediaMetadata.artworkUri);
+                if(binding.albumArtwork.getDrawable() == null) {
+                	binding.albumArtwork.setImageResource(R.drawable.ic_music_note);
+                }
+                
+                if(musicService.getPlayer().isPlaying()) {
+                	binding.playPause.setImageResource(R.drawable.ic_pause_outline);
+                    isPlayerPlaying = true;
+                } else {
+                    binding.playPause.setImageResource(R.drawable.ic_play_outline);
+                    isPlayerPlaying = false;
+                }
+        }
+        
+        binding.playPause.setOnClickListener(view -> {
+                
+                        // Return if there are no songs
+                        if(musicService.getPlayer().getMediaItemCount() == 0) {
+                        	return;
+                        }
+                
+                        if(musicService.getPlayer().isPlaying()) {
+                            musicService.getPlayer().stop();
+                        } else {
+                            musicService.getPlayer().prepare();
+                            musicService.getPlayer().play();
+                        }
+                });
+                
+        binding.skipNext.setOnClickListener(view -> {
+                        
+                        if(musicService.getPlayer().isPlaying()) {
+                            musicService.getPlayer().stop();
+                        }
+                    
+                        if(musicService.getPlayer().getMediaItemCount() != 0) {
+                        	if(musicService.getPlayer().hasNextMediaItem()) {
+                                musicService.getPlayer().seekToNextMediaItem();
+                            } 
+                            else if(musicService.getPlayer().getMediaItemCount() == 1){
+                                musicService.getPlayer().seekTo(0, 0); /* Replay same song again if media item is 1*/
+                                musicService.getPlayer().prepare();    
+                                musicService.getPlayer().play();     
+                            }
+                            else {
+                                musicService.getPlayer().seekTo(0, 0);
+                            }
+                        }
+                });
+        
+        musicService.setStateHandler(() -> {
+                
+                if(musicService.getPlayer().getMediaItemCount() != 0 && musicService.getPlayer().getCurrentMediaItem() != null){
+                    // Metadata
+                    binding.songTitle.setSelected(true);
+                    binding.songTitle.setText(musicService.getPlayer().getCurrentMediaItem().mediaMetadata.title);
+                    binding.songArtist.setText(musicService.getPlayer().getCurrentMediaItem().mediaMetadata.artist);
+                
+                    // Album artwork 
+                    binding.albumArtwork.setImageURI(musicService.getPlayer().getCurrentMediaItem().mediaMetadata.artworkUri);
+                    if(binding.albumArtwork.getDrawable() == null) {
+                        binding.albumArtwork.setImageResource(R.drawable.ic_music_note);
+                    }
+                
+                    if(musicService.getPlayer().isPlaying()) {
+                        binding.playPause.setImageResource(R.drawable.ic_pause_outline);
+                        isPlayerPlaying = true;    
+                    } else {
+                        binding.playPause.setImageResource(R.drawable.ic_play_outline);
+                        isPlayerPlaying = false;    
+                    }
+                }
+        });
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName componentName) {
+        musicService.setStateHandler(null);
+        musicService = null;
     }
 
     @Override

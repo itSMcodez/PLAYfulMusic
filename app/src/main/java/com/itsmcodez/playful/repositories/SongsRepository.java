@@ -40,8 +40,9 @@ public class SongsRepository {
                 String albumId = cursor.getString(5);
                 String songId = cursor.getString(6);
                 
+                long _albumId = Long.parseLong(albumId);
                 Uri albumPath = Uri.parse("content://media/external/audio/albumart");
-                Uri albumArtwork = ContentUris.withAppendedId(albumPath, Integer.parseInt(albumId));
+                Uri albumArtwork = ContentUris.withAppendedId(albumPath, _albumId);
                 
                 songs.add(new SongsModel(path, title, artist, duration, album, albumId, songId, albumArtwork));
                 

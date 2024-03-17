@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/panel"
+    android:background="@color/colorPanel_80"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/album_cover_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+        
+        <ImageView
+            android:id="@+id/album_cover"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_music_note"/>
+        
+        <LinearLayout
+            android:background="@color/colorPanel_80"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="@string/activity_player_action_bar_title" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+            
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/album_artwork"
+                android:layout_height="320dp"
+                android:layout_width="320dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center"
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_overlay="true"
+                app:civ_border_width="1dp"
+                android:src="@drawable/ic_music_note"/>
+            
+            <LinearLayout
+                android:id="@+id/metadata_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+        
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:lines="2"
+                    android:textSize="24sp"
+                    android:id="@+id/song_title"
+                    android:textStyle="bold"
+                    android:text="Song title" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    android:id="@+id/song_artist"
+                    android:text="Song artist" />
+        
+            </LinearLayout>
+            
+        </LinearLayout>
+        
+    </FrameLayout>
+    
+    <LinearLayout
+        android:id="@+id/controllers_holder"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/colorMiniControllerBg"
+        android:orientation="vertical"
+        android:layout_below="@id/album_cover_holder"
+        android:layout_alignParentBottom="true">
+        
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/quick_access_toolbar"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"/>
+        
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:padding="8dp">
+            
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/song_current_duration"
+                android:text="00:00" />
+            
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_toEndOf="@id/song_current_duration"
+                android:layout_toStartOf="@id/song_duration"
+                android:layout_centerVertical="true"/>
+            
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/song_duration"
+                android:text="00:00" />
+            
+        </RelativeLayout>
+        
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+            
+            <ImageView
+                android:id="@+id/repeat"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:background="?attr/roundSelector"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginStart="8dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_repeat_off"/>
+            
+            <RelativeLayout
+                android:id="@+id/playback_controls"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="8dp">
+                
+                <ImageView
+                    android:id="@+id/skip_prev"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/roundSelector"
+                    android:scaleType="fitCenter"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_margin="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_fast_rewind_outline"/>
+                
+                <ImageView
+                    android:id="@+id/play_pause"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_toEndOf="@id/skip_prev"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/roundSelector"
+                    android:scaleType="fitCenter"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_margin="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_play_circle_outline"/>
+                
+                <ImageView
+                    android:id="@+id/skip_next"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_toEndOf="@id/play_pause"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/roundSelector"
+                    android:scaleType="fitCenter"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_margin="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_fast_forward_outline"/>
+                
+            </RelativeLayout>
+            
+            <ImageView
+                android:id="@+id/shuffle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:background="?attr/roundSelector"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="8dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_shuffle_off"/>
+            
+        </LinearLayout>
+        
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/bottomsheet"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+            
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>
