@@ -18,6 +18,7 @@ import androidx.media3.exoplayer.util.EventLogger;
 import androidx.media3.session.MediaSession;
 import androidx.media3.session.MediaSession.ControllerInfo;
 import com.itsmcodez.playful.MainActivity;
+import com.itsmcodez.playful.PlayerActivity;
 import com.itsmcodez.playful.callbacks.StateHandleCallback;
 import com.itsmcodez.playful.services.notification.PlaybackNotification;
 import com.itsmcodez.playful.utils.MusicUtils;
@@ -47,7 +48,7 @@ public class MusicService extends Service {
         // Initialize SESSION_ACTIVITY
         SESSION_ACTIVITY =
                 PendingIntent.getActivity(
-                        getBaseContext(), 0, new Intent(getBaseContext(), MainActivity.class), 0);
+                        getBaseContext(), 0, new Intent(getBaseContext(), PlayerActivity.class), 0);
         
         // powerManager and wakeLock
         powerManager = (PowerManager) getSystemService(POWER_SERVICE);

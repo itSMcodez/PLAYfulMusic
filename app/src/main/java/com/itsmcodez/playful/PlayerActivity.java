@@ -16,7 +16,9 @@ import com.itsmcodez.playful.utils.MusicUtils;
 public class PlayerActivity extends AppCompatActivity implements ServiceConnection {
     private ActivityPlayerBinding binding;
     private MusicService musicService;
+    private boolean isBindingNull = false;
     private boolean isPlayerPlaying = false;
+    private Handler progressHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +29,21 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
         // Action Bar
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        // UI progress handler
+        progressHandler = new Handler(getMainLooper());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(!isBindingNull) {
+            isBindingNull = true;
+        }
         this.binding = null;
+        
+        if (!isPlayerPlaying) stopService(new Intent(PlayerActivity.this, MusicService.class));
+        
     }
     
     @Override
@@ -41,11 +52,19 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
                 new Intent(PlayerActivity.this, MusicService.class),
                 this,
                 BIND_AUTO_CREATE);
+        isBindingNull = false;
         super.onResume();
     }
     
     @Override
     protected void onPause() {
+        isBindingNull = true;
+        if(musicService.getPlayer().isPlaying()) {
+        	isPlayerPlaying = true;
+        }
+        else {
+            isPlayerPlaying = false;
+        }
         musicService.setStateHandler(null);
         unbindService(this);
         super.onPause();
@@ -62,7 +81,9 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
                 binding.songTitle.setText(musicService.getPlayer().getCurrentMediaItem().mediaMetadata.title);
                 binding.songArtist.setText(musicService.getPlayer().getCurrentMediaItem().mediaMetadata.artist);
                 binding.songDuration.setText(MusicUtils.getFormattedTime(musicService.getPlayer().getContentDuration()));
+                binding.songCurrentDuration.setText(MusicUtils.getFormattedTime(musicService.getPlayer().getContentPosition())); 
                 binding.seekBar.setMax((int)musicService.getPlayer().getContentDuration());
+                binding.seekBar.setProgress((int) musicService.getPlayer().getContentPosition());
                 
                 // Album artwork 
                 binding.albumArtwork.setImageURI(musicService.getPlayer().getCurrentMediaItem().mediaMetadata.artworkUri);
@@ -73,8 +94,10 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
                 
                 if(musicService.getPlayer().isPlaying()) {
                 	binding.playPause.setImageResource(R.drawable.ic_pause_circle_outline);
+                    isPlayerPlaying = true;
                 } else {
                     binding.playPause.setImageResource(R.drawable.ic_play_circle_outline);
+                    isPlayerPlaying = false;
                 }
             
                 updateUIProgress();
@@ -177,8 +200,10 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
                 
                     if(musicService.getPlayer().isPlaying()) {
                         binding.playPause.setImageResource(R.drawable.ic_pause_circle_outline);
+                        isPlayerPlaying = true;
                     } else {
                         binding.playPause.setImageResource(R.drawable.ic_play_circle_outline);
+                        isPlayerPlaying = false;
                     }
                     
                     updateUIProgress();
@@ -196,17 +221,22 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
     }
     
     public void updateUIProgress() {
-        if(musicService != null) {
-        	
-            new Handler().postDelayed(() -> {
-                
-                if(musicService.getPlayer().isPlaying()) {
-                	binding.songCurrentDuration.setText(MusicUtils.getFormattedTime(musicService.getPlayer().getContentPosition())); 
-                    binding.seekBar.setProgress((int) musicService.getPlayer().getContentPosition());
+        runOnUiThread(new Runnable(){
+                @Override
+                public void run() {
+                    if(!isBindingNull) {
+                        assert musicService != null;
+                    	if(musicService.getPlayer().isPlaying()) {
+                            binding.songCurrentDuration.setText(MusicUtils.getFormattedTime(musicService.getPlayer().getContentPosition())); 
+                            binding.seekBar.setProgress((int) musicService.getPlayer().getContentPosition());
+                    	}
+                    }
+                    
+                    if(!isBindingNull) {
+                    	progressHandler.postDelayed(this, 1000);
+                    }
                 }
                 
-            updateUIProgress();
-            }, 1000);
-        }
+        });
     }
 }

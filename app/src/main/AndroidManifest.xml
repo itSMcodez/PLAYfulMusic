@@ -125,7 +125,8 @@
         <activity
             android:name="PlayerActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop">
         </activity>
         
     </application>
