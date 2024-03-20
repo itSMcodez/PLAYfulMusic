@@ -26,6 +26,7 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
     private boolean isPlayerPlaying = false;
     private Handler progressHandler;
     private int repeatMode = 0;
+    private boolean inShuffleMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,9 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
         TooltipCompat.setTooltipText(binding.playPause, "Play/Pause track");
         TooltipCompat.setTooltipText(binding.shuffle, "Shuffle");
         
-        // Player repeat mode
+        // Player repeat mode and shuffle
         repeatMode = ExoPlayer.REPEAT_MODE_OFF;
+        inShuffleMode = false;
         
         // UI progress handler
         progressHandler = new Handler(getMainLooper());
@@ -169,6 +171,14 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
                     repeatMode = ExoPlayer.REPEAT_MODE_ALL;
                 }
             
+                if(musicService.getPlayer().getShuffleModeEnabled()) {
+                	binding.shuffle.setImageResource(R.drawable.ic_shuffle_on);
+                    inShuffleMode = true;
+                } else {
+                	binding.shuffle.setImageResource(R.drawable.ic_shuffle_off);
+                    inShuffleMode = false;
+                }
+            
                 if(musicService.getPlayer().isPlaying()) {
                 	binding.playPause.setImageResource(R.drawable.ic_pause_circle_outline);
                     isPlayerPlaying = true;
@@ -275,6 +285,20 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
                 	binding.repeat.setImageResource(R.drawable.ic_repeat_off);
                     repeatMode = ExoPlayer.REPEAT_MODE_OFF;
                     Toast.makeText(PlayerActivity.this, "REPEAT_OFF", Toast.LENGTH_SHORT).show();
+                }
+        });
+        
+        binding.shuffle.setOnClickListener(view -> {
+                if(!inShuffleMode) {
+                	musicService.getPlayer().setShuffleModeEnabled(true);
+                    binding.shuffle.setImageResource(R.drawable.ic_shuffle_on);
+                    inShuffleMode = true;
+                    Toast.makeText(PlayerActivity.this, "SHUFFLE_ON", Toast.LENGTH_SHORT).show();
+                } else {
+                    musicService.getPlayer().setShuffleModeEnabled(false);
+                    binding.shuffle.setImageResource(R.drawable.ic_shuffle_off);
+                    inShuffleMode = false;
+                    Toast.makeText(PlayerActivity.this, "SHUFFLE_OFF", Toast.LENGTH_SHORT).show();
                 }
         });
         
