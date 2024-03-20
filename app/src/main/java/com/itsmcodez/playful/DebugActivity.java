@@ -61,6 +61,7 @@ public class DebugActivity extends AppCompatActivity {
                 
             }
         });
+        bld.setCancelable(false);
 		bld.create().show();
     }
 }

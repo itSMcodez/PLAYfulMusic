@@ -9,6 +9,7 @@
     <color name="colorAddPlaylistFabBg">#212730</color>
     <color name="colorCardBg">@color/grey_95</color>
     <color name="blue_grey_600">#546E7A</color>
+    <color name="grey">#757575</color>
     <color name="grey_3">#f7f7f7</color>
     <color name="grey_5">#f2f2f2</color>
     <color name="grey_10">#e6e6e6</color>

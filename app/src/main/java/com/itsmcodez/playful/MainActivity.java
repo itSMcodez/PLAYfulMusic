@@ -6,6 +6,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.content.Context;
 import android.content.Intent;
+import androidx.appcompat.widget.TooltipCompat;
 import com.itsmcodez.playful.utils.MusicUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,6 +48,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle(R.string.activity_main_action_bar_title);
         getSupportActionBar().setSubtitle(R.string.activity_main_action_bar_subtitle);
+        
+        // Tooltips
+        TooltipCompat.setTooltipText(binding.miniController, "Mini controller");
+        TooltipCompat.setTooltipText(binding.skipNext, "Next track");
+        TooltipCompat.setTooltipText(binding.playPause, "Play/Pause");
 
         // Initialize fragments
         SongsFragment songsFragment = new SongsFragment();

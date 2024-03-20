@@ -131,6 +131,8 @@ public class SearchableActivity extends AppCompatActivity implements ServiceConn
                                                 }
                                 
                                                 musicService.getPlayer().setMediaItems(MusicUtils.getMediaItems(), position, 0);
+                                
+                                                startActivity(new Intent(SearchableActivity.this, PlayerActivity.class));
                                             }
 
                                             @Override

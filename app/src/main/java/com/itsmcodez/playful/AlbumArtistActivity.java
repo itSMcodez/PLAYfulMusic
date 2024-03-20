@@ -68,7 +68,11 @@ public class AlbumArtistActivity extends AppCompatActivity implements ServiceCon
                     }
                 
                     musicService.getPlayer().setMediaItems(MusicUtils.getMediaItems(), 0, 0);
+                
+                    startActivity(new Intent(AlbumArtistActivity.this, PlayerActivity.class));
                 });
+        
+                
 
         // ViewModel
         songsViewModel = new ViewModelProvider(AlbumArtistActivity.this).get(SongsViewModel.class);
@@ -184,6 +188,8 @@ public class AlbumArtistActivity extends AppCompatActivity implements ServiceCon
                                                         }
                                     
                                                         musicService.getPlayer().setMediaItems(MusicUtils.getMediaItems(), position, 0);
+                                    
+                                                        startActivity(new Intent(AlbumArtistActivity.this, PlayerActivity.class));
                                                     }
 
                                             @Override

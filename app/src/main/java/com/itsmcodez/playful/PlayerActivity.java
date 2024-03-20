@@ -6,10 +6,16 @@ import android.content.ServiceConnection;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SeekBar;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.media3.exoplayer.ExoPlayer;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.itsmcodez.playful.databinding.ActivityPlayerBinding;
+import com.itsmcodez.playful.databinding.LayoutNowPlayingQueueBinding;
 import com.itsmcodez.playful.services.MusicService;
 import com.itsmcodez.playful.utils.MusicUtils;
 
@@ -19,6 +25,7 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
     private boolean isBindingNull = false;
     private boolean isPlayerPlaying = false;
     private Handler progressHandler;
+    private int repeatMode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +37,65 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
+        // Tooltips
+        TooltipCompat.setTooltipText(binding.repeat, "Repeat");
+        TooltipCompat.setTooltipText(binding.skipNext, "Next track");
+        TooltipCompat.setTooltipText(binding.skipPrev, "Previous track");
+        TooltipCompat.setTooltipText(binding.playPause, "Play/Pause track");
+        TooltipCompat.setTooltipText(binding.shuffle, "Shuffle");
+        
+        // Player repeat mode
+        repeatMode = ExoPlayer.REPEAT_MODE_OFF;
+        
         // UI progress handler
         progressHandler = new Handler(getMainLooper());
+        
+        // Now plating queue BottomSheet
+        //initNowPlayingQueue();
+    }
+
+    private void initNowPlayingQueue() {
+        
+        LayoutNowPlayingQueueBinding binding = LayoutNowPlayingQueueBinding.inflate(getLayoutInflater());
+        BottomSheetBehavior nowPlayingQueueLayout = BottomSheetBehavior.from(binding.getRoot());
+        
+        binding.header.setOnClickListener(view -> {
+                if(nowPlayingQueueLayout.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    	nowPlayingQueueLayout.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                }
+                else if(nowPlayingQueueLayout.getState() == BottomSheetBehavior.STATE_HALF_EXPANDED) {
+                    nowPlayingQueueLayout.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+                else {
+                    nowPlayingQueueLayout.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+        });
+        
+        binding.expansionStateImg.setOnClickListener(view -> {
+                if(nowPlayingQueueLayout.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    	nowPlayingQueueLayout.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                }
+                else if(nowPlayingQueueLayout.getState() == BottomSheetBehavior.STATE_HALF_EXPANDED) {
+                    nowPlayingQueueLayout.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+                else {
+                    nowPlayingQueueLayout.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+        });
+        
+        nowPlayingQueueLayout.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback(){
+                
+                @Override
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                    
+                }
+                
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                    binding.expansionStateImg.setRotation(slideOffset * 180);
+                }
+                
+        });
     }
 
     @Override
@@ -92,6 +156,19 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
                 }
                 binding.albumCover.setImageDrawable(binding.albumArtwork.getDrawable()); 
                 
+                // Properties
+                if(musicService.getPlayer().getRepeatMode() == ExoPlayer.REPEAT_MODE_OFF) {
+                	binding.repeat.setImageResource(R.drawable.ic_repeat_off);
+                    repeatMode = ExoPlayer.REPEAT_MODE_OFF;
+                } else if(musicService.getPlayer().getRepeatMode() == ExoPlayer.REPEAT_MODE_ONE) {
+                	binding.repeat.setImageResource(R.drawable.ic_repeat_once);
+                    repeatMode = ExoPlayer.REPEAT_MODE_ONE;
+                }
+                else {
+                    binding.repeat.setImageResource(R.drawable.ic_repeat);
+                    repeatMode = ExoPlayer.REPEAT_MODE_ALL;
+                }
+            
                 if(musicService.getPlayer().isPlaying()) {
                 	binding.playPause.setImageResource(R.drawable.ic_pause_circle_outline);
                     isPlayerPlaying = true;
@@ -180,6 +257,27 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
                 
         });
         
+        binding.repeat.setOnClickListener(view -> {
+                if(repeatMode == 0) {
+                	musicService.getPlayer().setRepeatMode(ExoPlayer.REPEAT_MODE_ONE);
+                    binding.repeat.setImageResource(R.drawable.ic_repeat_once);
+                    repeatMode = ExoPlayer.REPEAT_MODE_ONE;
+                    Toast.makeText(PlayerActivity.this, "REPEAT_ONCE", Toast.LENGTH_SHORT).show();
+                }
+                else if(repeatMode == 1) {
+                	musicService.getPlayer().setRepeatMode(ExoPlayer.REPEAT_MODE_ALL);
+                    binding.repeat.setImageResource(R.drawable.ic_repeat);
+                    repeatMode = ExoPlayer.REPEAT_MODE_ALL;
+                    Toast.makeText(PlayerActivity.this, "REPEAT_ALL", Toast.LENGTH_SHORT).show();
+                }
+                else if(repeatMode == 2) {
+                    musicService.getPlayer().setRepeatMode(ExoPlayer.REPEAT_MODE_OFF);
+                	binding.repeat.setImageResource(R.drawable.ic_repeat_off);
+                    repeatMode = ExoPlayer.REPEAT_MODE_OFF;
+                    Toast.makeText(PlayerActivity.this, "REPEAT_OFF", Toast.LENGTH_SHORT).show();
+                }
+        });
+        
         musicService.setStateHandler(() -> {
                 
                 if(musicService.getPlayer().getMediaItemCount() != 0 && musicService.getPlayer().getCurrentMediaItem() != null){
@@ -198,6 +296,19 @@ public class PlayerActivity extends AppCompatActivity implements ServiceConnecti
                     }
                     binding.albumCover.setImageDrawable(binding.albumArtwork.getDrawable());    
                 
+                    // Properties
+                    if(musicService.getPlayer().getRepeatMode() == ExoPlayer.REPEAT_MODE_OFF) {
+                    	binding.repeat.setImageResource(R.drawable.ic_repeat_off);
+                        repeatMode = ExoPlayer.REPEAT_MODE_OFF;
+                    } else if(musicService.getPlayer().getRepeatMode() == ExoPlayer.REPEAT_MODE_ONE) {
+                    	binding.repeat.setImageResource(R.drawable.ic_repeat_once);
+                        repeatMode = ExoPlayer.REPEAT_MODE_ONE;
+                    }
+                    else {
+                        binding.repeat.setImageResource(R.drawable.ic_repeat);
+                        repeatMode = ExoPlayer.REPEAT_MODE_ALL;
+                    }
+                    
                     if(musicService.getPlayer().isPlaying()) {
                         binding.playPause.setImageResource(R.drawable.ic_pause_circle_outline);
                         isPlayerPlaying = true;

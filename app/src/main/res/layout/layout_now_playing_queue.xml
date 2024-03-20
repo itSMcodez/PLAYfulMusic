@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/songs_queue_sheet_layout"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="40dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPanel_80"
+        android:clickable="true"
+        android:focusable="true">
+
+        <View
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="@color/grey" />
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_height="68dp"
+            android:layout_width="match_parent"
+            android:background="@color/colorMiniControllerBg"
+            android:gravity="top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textColor="@color/grey"
+                android:text="@string/layout_now_playing_header_text" />
+
+            <ImageView
+                android:id="@+id/expansion_state_img"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="8dp"
+                android:src="@drawable/ic_chevron_down"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/roundSelector" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="@color/grey_20" />
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
