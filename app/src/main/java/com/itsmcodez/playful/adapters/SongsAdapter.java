@@ -1,8 +1,13 @@
 package com.itsmcodez.playful.adapters;
 
 import android.app.Application;
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +30,9 @@ import com.itsmcodez.playful.models.PlaylistsModel;
 import com.itsmcodez.playful.models.PlaylistSongsModel;
 import com.itsmcodez.playful.models.SongsModel;
 import com.itsmcodez.playful.repositories.PlaylistsRepository;
+import com.itsmcodez.playful.services.MusicService;
 import com.itsmcodez.playful.utils.MusicUtils;
+import com.itsmcodez.playful.utils.ServiceUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.ArrayList;
 
@@ -35,11 +42,15 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
     private LayoutInflater inflater;
     private ArrayList<SongsModel> songs;
     private OnClickEvents onClickEvents;
+    private MusicService musicService;
+    private ServiceConnection serviceConnection;
 
     public SongsAdapter(Context context, LayoutInflater inflater, ArrayList<SongsModel> songs) {
         this.context = context;
         this.inflater = inflater;
         this.songs = songs;
+        // Register music service
+        bindToMusicService();
     }
 
     public static class SongsViewHolder extends RecyclerView.ViewHolder {
@@ -191,6 +202,14 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
                                                     }
                                                 });
                                     }
+                            
+                                    if(item.getItemId() == R.id.play_next_menu_item) {
+                                
+                                        if(musicService.getPlayer().getMediaItemCount() != 0 && musicService.getPlayer().getCurrentMediaItem() != null) {
+                                            musicService.getPlayer().addMediaItem(musicService.getPlayer().getCurrentMediaItemIndex() + 1, MusicUtils.getMediaItemAt(position));
+                                            Toast.makeText(context.getApplicationContext(), "Added 1 song to playing queue, it will be played as next", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
 
                                     return true;
                                 }
@@ -213,8 +232,31 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
         this.onClickEvents = onClickEvents;
     }
     
+    private void bindToMusicService() {
+        
+    	serviceConnection = ServiceUtils.getUpStreamConnection(new ServiceConnection(){
+                @Override
+                public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                    MusicService.MusicBinder binder = (MusicService.MusicBinder) iBinder;
+                    musicService = binder.getService();
+                }
+                
+                @Override
+                public void onServiceDisconnected(ComponentName componentName) {
+                    musicService = null;
+                }
+        });
+        
+        context.bindService(new Intent(context, MusicService.class), serviceConnection, ServiceUtils.BIND_AUTO_CREATE);
+    }
+    
+    public void unbindFromMusicService() {
+    	context.unbindService(serviceConnection);
+    }
+    
     public interface OnClickEvents{
         void onItemClick(View view, SongsModel song, int position);
         boolean onItemLongClick(View view, SongsModel song, int position);
     }
+    
 }

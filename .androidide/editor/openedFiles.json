@@ -1,50 +1,80 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/drawable/ic_shuffle_on.xml",
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/utils/MusicUtils.java",
       "selection": {
         "end": {
-          "column": 45,
-          "index": 276,
-          "line": 7
+          "column": 58,
+          "index": 3002,
+          "line": 82
         },
         "start": {
-          "column": 45,
-          "index": 276,
-          "line": 7
+          "column": 58,
+          "index": 3002,
+          "line": 82
         }
       }
     },
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/drawable/ic_repeat.xml",
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/adapters/SongsAdapter.java",
       "selection": {
         "end": {
-          "column": 45,
-          "index": 276,
-          "line": 7
+          "column": 46,
+          "index": 3302,
+          "line": 84
         },
         "start": {
-          "column": 45,
-          "index": 276,
-          "line": 7
+          "column": 46,
+          "index": 3302,
+          "line": 84
         }
       }
     },
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/drawable/ic_repeat_once.xml",
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/utils/ColorUtils.java",
       "selection": {
         "end": {
-          "column": 45,
-          "index": 276,
-          "line": 7
+          "column": 5,
+          "index": 2823,
+          "line": 82
         },
         "start": {
-          "column": 45,
-          "index": 276,
-          "line": 7
+          "column": 4,
+          "index": 2702,
+          "line": 79
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/utils/ServiceUtils.java",
+      "selection": {
+        "end": {
+          "column": 23,
+          "index": 520,
+          "line": 14
+        },
+        "start": {
+          "column": 23,
+          "index": 520,
+          "line": 14
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/MainActivity.java",
+      "selection": {
+        "end": {
+          "column": 77,
+          "index": 8854,
+          "line": 206
+        },
+        "start": {
+          "column": 8,
+          "index": 8785,
+          "line": 206
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/drawable/ic_repeat_once.xml"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/adapters/SongsAdapter.java"
 }

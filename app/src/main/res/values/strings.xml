@@ -29,6 +29,7 @@
     <string name="activity_debug_dialog_positive_bt_text">Report crash</string>
     <string name="activity_debug_dialog_title">Error: Application crashed!</string>
     <string name="add_song_to_playlist">Add to a playlist</string>
+    <string name="add_song_to_playing_queue">Play next</string>
     <string name="select_playlist_dialog_title">Select a playlist</string>
     <string name="layout_now_playing_header_text">Now playing queue...</string>
 </resources>

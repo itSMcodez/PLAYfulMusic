@@ -80,6 +80,10 @@ public final class MusicUtils {
         return MusicUtils.mediaItems;
     }
     
+    public static MediaItem getMediaItemAt(int position) {
+    	return MusicUtils.mediaItems.get(position);
+    }
+    
     public static void addMediaItem(MediaItem mediaItem, int position){
         mediaItems.add(position, mediaItem);
     }

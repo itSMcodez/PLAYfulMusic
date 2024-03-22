@@ -5,5 +5,10 @@
         android:id="@+id/add_to_playlist_menu_item"
         android:name="@string/add_song_to_playlist"
         android:title="@string/add_song_to_playlist" />
+    
+    <item
+        android:id="@+id/play_next_menu_item"
+        android:name="@string/add_song_to_playing_queue"
+        android:title="@string/add_song_to_playing_queue" />
 
 </menu>
