@@ -1,20 +1,50 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/AlbumArtistActivity.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/drawable/ic_shuffle_on.xml",
       "selection": {
         "end": {
-          "column": 74,
-          "index": 2726,
-          "line": 69
+          "column": 45,
+          "index": 276,
+          "line": 7
         },
         "start": {
-          "column": 74,
-          "index": 2726,
-          "line": 69
+          "column": 45,
+          "index": 276,
+          "line": 7
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/drawable/ic_repeat.xml",
+      "selection": {
+        "end": {
+          "column": 45,
+          "index": 276,
+          "line": 7
+        },
+        "start": {
+          "column": 45,
+          "index": 276,
+          "line": 7
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/drawable/ic_repeat_once.xml",
+      "selection": {
+        "end": {
+          "column": 45,
+          "index": 276,
+          "line": 7
+        },
+        "start": {
+          "column": 45,
+          "index": 276,
+          "line": 7
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/java/com/itsmcodez/playful/AlbumArtistActivity.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/PLAYful/app/src/main/res/drawable/ic_repeat_once.xml"
 }
