@@ -67,10 +67,26 @@ public class AlbumArtistActivity extends AppCompatActivity implements ServiceCon
                         musicService.getPlayer().stop();
                     }
                 
+                    musicService.getPlayer().setShuffleModeEnabled(false);
                     musicService.getPlayer().setMediaItems(MusicUtils.getMediaItems(), 0, 0);
                 
                     startActivity(new Intent(AlbumArtistActivity.this, PlayerActivity.class));
                 });
+        
+        binding.shuffleAllBt.setOnClickListener(view -> {
+                    if (!musicService.isStarted) {
+                        startService(new Intent(AlbumArtistActivity.this, MusicService.class));
+                    }
+
+                    if (musicService.getPlayer().isPlaying()) {
+                        musicService.getPlayer().stop();
+                    }
+                
+                    musicService.getPlayer().setShuffleModeEnabled(true);
+                    musicService.getPlayer().setMediaItems(MusicUtils.getMediaItems(), 0, 0);
+                
+                    startActivity(new Intent(AlbumArtistActivity.this, PlayerActivity.class));
+        });
         
                 
 
